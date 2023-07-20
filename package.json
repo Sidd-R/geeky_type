@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "react-typing-game-hook": "^1.4.2"
+  }
+}
