@@ -1,6 +1,6 @@
 import { CommandType } from '@/data/commands';
 
-import { Action } from '@/context/Preference/types';
+import { Action } from '@/types';
 
 export const filterCommands = (commands: CommandType[], query: string) => {
   return query

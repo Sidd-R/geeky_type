@@ -312,3 +312,4 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
   }
 );
 
+export default TypingInput
