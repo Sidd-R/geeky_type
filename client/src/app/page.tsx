@@ -25,13 +25,13 @@ import Layout from "@/components/Layout/Layout";
 
 function MyApp({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps: { ...pageProps },
   router,
 }: AppProps) {
   return (
     <div>
       <CommandPalette data={commands} />
-      <SessionProvider session={session}>
+      {/* <SessionProvider session={session}> */}
         <Layout>
           <ToastContainer
             toastClassName={() =>
@@ -54,7 +54,7 @@ function MyApp({
             </ChatProvider>
           </RoomProvider> */}
         </Layout>
-      </SessionProvider>
+      {/* </SessionProvider> */}
     </div>
   );
 }
