@@ -1,16 +1,16 @@
-"use client"
-//import clsx from "clsx";
+"use client";
+import clsx from "clsx";
 import * as React from "react";
 // import { SiNextdotjs, SiPrisma, SiReact, SiTailwindcss } from 'react-icons/si';
 
-import Kbd from "@/components/Kbd";
+// import Kbd from "@/components/Kbd";
 import AnimateFade from "@/components/Layout/AnimateFade";
-import ArrowLink from "@/components/Link/ArrowLink";
-import UnderlineLink from "@/components/Link/UnderlineLink";
-//import Seo from "@/components/Seo";
+// import ArrowLink from "@/components/Link/ArrowLink";
+// import UnderlineLink from "@/components/Link/UnderlineLink";
+// import Seo from "@/components/Seo";
 import Tooltip from "@/components/Tooltip";
 
-//import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
+import { usePreferenceContext } from "@/context";
 
 // const techs = [
 //   { icon: <SiNextdotjs />, key: 'nextjs' },
@@ -24,34 +24,33 @@ type FontFamily = (typeof fontFamilyList)[number];
 
 export default function AboutPage() {
   const {
-    preferences: { theme, fontFamily },
+    preferences: { theme },
     dispatch,
   } = usePreferenceContext();
 
   return (
     <AnimateFade>
-      <Seo title="About" />
+      {/* <Seo title="About" /> */}
 
       <main>
         <section>
           <div className={clsx("layout min-h-[60vh] pt-10")}>
             <div>
-              <ArrowLink direction="left" className="my-4 text-hl" href="/">
-                <span className="text-hl">back to home</span>
-              </ArrowLink>
+              {/* <ArrowLink direction="left" className="my-4 text-hl" href="/"> */}
+              <span className="text-hl">back to home</span>
+              {/* </ArrowLink> */}
             </div>
             <div className="flex w-full flex-wrap gap-8 xs:whitespace-nowrap">
               <div className="flex-1">
                 <h1 className="text-hl">about</h1>
                 <div className="mt-4">
                   <p className="text-hl">
-                    this app is a clone of{" "}
-                    <UnderlineLink
-                      className="text-fg"
+                    this app is a clone of {/* <UnderlineLink */}
+                    {/* className="text-fg"
                       href="https://monkeytype.com"
                     >
-                      monkeytype
-                    </UnderlineLink>
+                      monkeytype */}
+                    {/* </UnderlineLink> */}
                   </p>
                   <p className="my-4 text-hl">tech stack:</p>
                   <div className="flex gap-4 text-4xl text-hl">
@@ -68,44 +67,26 @@ export default function AboutPage() {
                 <p className="mt-4 mb-2 text-hl">pages:</p>
                 <ul className="space-y-1">
                   <li>
-                    <UnderlineLink className="text-fg" href="/">
-                      home
-                    </UnderlineLink>
+                    {/* <UnderlineLink className="text-fg" href="/"> */}
+                    home
+                    {/* </UnderlineLink> */}
                   </li>
                   <li>
-                    <UnderlineLink className="text-fg" href="/leaderboard">
-                      leaderboard
-                    </UnderlineLink>
+                    {/* <UnderlineLink className="text-fg" href="/leaderboard"> */}
+                    leaderboard
+                    {/* </UnderlineLink> */}
                   </li>
                   <li>
-                    <UnderlineLink className="text-fg" href="/account">
-                      account
-                    </UnderlineLink>
+                    {/* <UnderlineLink className="text-fg" href="/account"> */}
+                    account
+                    {/* </UnderlineLink> */}
                   </li>
                   <li>
-                    <UnderlineLink className="text-fg" href="/multiplayer">
-                      multiplayer
-                    </UnderlineLink>
+                    {/* <UnderlineLink className="text-fg" href="/multiplayer"> */}
+                    multiplayer
+                    {/* </UnderlineLink> */}
                   </li>
                 </ul>
-
-                <p className="mt-4 text-hl">commands:</p>
-                <div className="mt-4 flex flex-col justify-center gap-4 font-primary">
-                  <div className="flex items-center space-x-2 text-sm">
-                    <Kbd>tab</Kbd>
-                    <span className="text-hl"> + </span>
-                    <Kbd>enter</Kbd>
-                    <span className="text-hl"> - restart test </span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm">
-                    <Kbd>ctrl/cmd</Kbd>
-                    <span className="text-hl"> + </span>
-                    <Kbd>k</Kbd>
-                    <span className="text-hl"> or </span>
-                    <Kbd>p</Kbd>
-                    <span className="text-hl"> - command palette </span>
-                  </div>
-                </div>
               </div>
 
               <div className="flex-1">
@@ -127,7 +108,7 @@ export default function AboutPage() {
                         )}
                         onChange={(e) =>
                           dispatch({
-                            type: "SET_THEME",
+                            type: "setTheme",
                             payload: e.target.value as Theme,
                           })
                         }
@@ -161,7 +142,7 @@ export default function AboutPage() {
                   </li>
                 </ol>
 
-                <ol className="mt-8 space-y-6">
+                {/* <ol className="mt-8 space-y-6">
                   <li className="space-y-4">
                     <h2 className="text-lg md:text-xl">font family</h2>
                     <div className="flex flex-wrap gap-2">
@@ -225,7 +206,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                   </li>
-                </ol>
+                </ol> */}
               </div>
             </div>
           </div>
