@@ -8,31 +8,43 @@ import { CgSpinner } from 'react-icons/cg';
 import { FaArrowRight } from 'react-icons/fa';
 import { RiTeamFill } from 'react-icons/ri';
 // import { toast } from 'react-toastify';
-import * as yup from 'yup';
+// import * as yup from 'yup';
 
-import { createRoom } from '@/lib/socket/roomHandler';
+// import { createRoom } from '@/lib/socket/roomHandler';
 
 import Button from '@/components/Button/Button';
 // import ChatBox from '@/components/Chat/ChatBox';
-import Input from '@/components/Input';
+// import Input from '@/components/Input';
 import AnimateFade from '@/components/Layout/AnimateFade';
 // import Seo from '@/components/Seo';
 
 import { useRoomContext } from '@/room';
+// import { Socket } from 'socket.io-client';
+// import { v4 } from 'uuid';
 
-const schema = yup.object().shape({
-  code: yup
-    .string()
-    .required('code is required')
-    .length(6, 'code must be 6 characters long'),
-});
+// export const createRoom = (
+//   socket: Socket,
+//   mode: 'words' | 'sentences' | 'numbers'
+// ) => {
+//   const id = v4().slice(0, 6);
+//   // check whether id exists yet or not
+//   socket.emit('create room', id, mode);
+// };
+
+
+// const schema = yup.object().shape({
+//   code: yup
+//     .string()
+//     .required('code is required')
+//     .length(6, 'code must be 6 characters long'),
+// });
 
 export default function MultiplayerPage() {
-  const methods = useForm<{ code: string }>({
-    mode: 'onTouched',
-    resolver: yupResolver(schema),
-  });
-  const { handleSubmit } = methods;
+  // const methods = useForm<{ code: string }>({
+  //   mode: 'onTouched',
+  //   resolver: yupResolver(schema),
+  // });
+  // const { handleSubmit } = methods;
 
   const {
     room: { socket, mode },
@@ -42,25 +54,42 @@ export default function MultiplayerPage() {
 
   const router = useRouter();
 
-  const [isCreatingRoom, setIsCreatingRoom] = useState(false);
+  // const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [isJoiningRoom, setIsJoiningRoom] = useState(false);
 
-  useEffect(() => {
-    socket.emit('hi', 'hello');
+  const joinRandomRoom = () => {
+    setIsJoiningRoom(true)
+    // socket.connect()
+    console.log("join bruh");
+    
+    socket.emit('joinRandomRoom')
+  }
+
+  const createNewRoom = () => {
+    setIsJoiningRoom(true)
+  }
+
+  const joinUsingCode = () => {
+    setIsJoiningRoom(true)
+  }
+
+
+  // useEffect(() => {
+    // socket.emit('hi', 'hello');
 
     // create another room id if already exist
-    socket.off('room already exist').on('room already exist', () => {
-      createRoom(socket, mode);
-    });
+    // socket.off('room already exist').on('room already exist', () => {
+    //   createRoom(socket, mode);
+    // });
 
-    socket.off('end game').on('end game', () => {
-      dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
-      dispatch({ type: 'SET_IS_READY', payload: false });
-      dispatch({ type: 'SET_IS_PLAYING', payload: false });
-      dispatch({ type: 'SET_IS_FINISHED', payload: false });
-      dispatch({ type: 'SET_WINNER', payload: null });
-      resetTime(0);
-    });
+    // socket.off('end game').on('end game', () => {
+    //   dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
+    //   dispatch({ type: 'SET_IS_READY', payload: false });
+    //   dispatch({ type: 'SET_IS_PLAYING', payload: false });
+    //   dispatch({ type: 'SET_IS_FINISHED', payload: false });
+    //   dispatch({ type: 'SET_WINNER', payload: null });
+    //   resetTime(0);
+    // });
 
     // on create room success, redirect to that room
     // socket
@@ -71,7 +100,7 @@ export default function MultiplayerPage() {
     //     router.push(`/multiplayer/${roomId}`);
     //   });
 
-  }, []);
+  // }, []);
 
   const onSubmit = ({ code }: { code: string }) => {
     setIsJoiningRoom(true);
@@ -94,34 +123,27 @@ export default function MultiplayerPage() {
             <div className='flex w-full flex-col gap-4'>
               <RiTeamFill className='self-center text-[5rem] text-fg' />
               <h1 className='mb-2'>multiplayer mode</h1>
-              <FormProvider {...methods}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className='mx-auto -mb-2 flex max-w-[330px] justify-center  p-0 items-center'>
-                    <Input
-                      name='code'
-                      id='code'
-                      autoComplete='off'
-                      placeholder='enter room code'
-                      className='flex-1 rounded-r-none h-12 px-4 shadow-none bg-gray-200'
-                    />
-                  <div className='bg-yellow-400 h-12 px-3 flex justify-center items-center rounded-lg rounded-l-none '>
-                    <span className='text-gray-600 '>Join</span>
-                  </div>
-                    {/* <Button
-                      disabled={isJoiningRoom}
-                      type='submit'
-                      className={`grid h-[42px] w-12 place-items-center rounded-l-none ${
-                        isJoiningRoom && 'cursor-not-allowed'
-                      }`}
-                    >
-                      <FaArrowRight className='text-bg' />
-                    </Button> */}
-                  </div>
-                </form>
-              </FormProvider>
+              {/* <FormProvider {...methods}> */}
+                {/* <form onSubmit={onSubmit}> */}
+                <div className='flex items-center justify-center space-x-4 '>
+                <Button
+                  onClick={joinRandomRoom}
+                  disabled={isJoiningRoom}
+                  className={`${isJoiningRoom && 'cursor-not-allowed'} mb-0 bg-yellow-300`}
+                >
+                  {isJoiningRoom ? (
+                    <span className='flex items-center text-bg bg-yellow-300'>
+                      Joining
+                      <CgSpinner className='ml-2 animate-spin' />
+                    </span>
+                  ) : <span className='text-gray-600 mx-3'> Join Random Room</span>}
+                </Button>
+              </div>
+                {/* </form> */}
+              {/* </FormProvider> */}
 
               <span className='mb-4 text-3xl font-bold'>or</span>
-              <div className='mx-auto mb-4 flex space-x-2 font-primary'>
+              {/* <div className='mx-auto mb-4 flex space-x-2 font-primary'>
                 <button
                   onClick={() =>
                     dispatch({ type: 'SET_MODE', payload: 'words' })
@@ -159,26 +181,45 @@ export default function MultiplayerPage() {
                 >
                   numbers
                 </button>
-              </div>
-              <div className='flex items-center justify-center space-x-4'>
+              </div> */}
+              <div className='flex items-center justify-center space-x-4 '>
                 <Button
                   onClick={() => {
-                    setIsCreatingRoom(true);
-                    createRoom(socket, mode);
+                    setIsJoiningRoom(true);
+                    // createRoom(socket);
                   }}
-                  disabled={isCreatingRoom}
-                  className={`${isCreatingRoom && 'cursor-not-allowed'} mb-0`}
+                  disabled={isJoiningRoom}
+                  className={`${isJoiningRoom && 'cursor-not-allowed'} mb-0 bg-yellow-300`}
                 >
-                  {isCreatingRoom ? (
-                    <span className='flex items-center text-bg'>
-                      Creating room
+                  {isJoiningRoom ? (
+                    <span className='flex items-center text-bg bg-yellow-300'>
+                      Creating
                       <CgSpinner className='ml-2 animate-spin' />
                     </span>
-                  ) : (
-                    'Create New Room'
-                  )}
+                  ) : <span className='text-gray-600 mx-3'> Create New Room</span>}
                 </Button>
               </div>
+              <span className='mb-4 text-3xl font-bold'>or</span>
+              
+              <div className='mx-auto -mb-2 flex max-w-[330px] justify-center  p-0 items-center'>
+                    <input
+                      name='code'
+                      id='code'
+                      autoComplete='off'
+                      placeholder='enter room code'
+                      className='flex-1 rounded-r-none h-12 px-4 shadow-none bg-gray-200 rounded-lg'
+                    />
+                  <div className='bg-yellow-300 h-12 px-3 flex justify-center items-center rounded-lg rounded-l-none '
+                    onClick={joinUsingCode}
+                  >
+                  {isJoiningRoom ? (
+                    <span className='flex items-center text-bg bg-yellow-300'>
+                      Joining
+                      <CgSpinner className='ml-2 animate-spin' />
+                    </span>
+                  ) : <span className='text-gray-600 '>Join</span>}
+                  </div>
+                  </div>
             </div>
           </div>
         </section>

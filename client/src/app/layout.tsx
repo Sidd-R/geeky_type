@@ -16,7 +16,7 @@ import "@/styles/theme.css";
 import commands from "@/data/commands";
 
 import CommandPalette from "@/components/CommandPalette/CommandPalette";
-import Header from "@/components/Layout/Header";
+// import Header from "@/components/Layout/Header";
 import Layout from "@/components/Layout/Layout";
 import Navbar from "@/components/Navbar";
 

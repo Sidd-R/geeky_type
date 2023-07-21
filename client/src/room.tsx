@@ -113,10 +113,10 @@ const reducer = (state: RoomState, action: RoomAction): RoomState => {
 
 
 const socket = io(
-  process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:8080',
-  {
-    autoConnect: false,
-  }
+  'http://localhost:8080/public',
+  // {
+    // autoConnect: false,
+  // }
 );
 
 const RoomContext = React.createContext({} as RoomContextValues);

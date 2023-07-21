@@ -181,12 +181,13 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           <span
             className={clsx(
               'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',
-              { 'text-fg opacity-100 ': !isFocused }
+              { 'text-fg opacity-100  text-gray-600': !isFocused }
             )}
           >
             Click
-            <BsCursorFill className='mx-2 scale-x-[-1]' />
-            or press any key to focus
+            {/* <BsCursorFill className='mx-2 scale-x-[-1]' /> */}
+            {/* or press any key */}
+             to focus
           </span>
           <div
             className={clsx(
