@@ -13,7 +13,7 @@ export default function TypingArea() {
   const _ = require('lodash');
 
   const {
-    preferences: { type, time, isOpen },
+    preferences: { type, time, isOpen, theme}, dispatch
   } = usePreferenceContext();
 
   const [list, setList] = useState<string[]>(() => shuffleList(type));
@@ -26,6 +26,7 @@ export default function TypingArea() {
       } else if (event.key !== 'Enter') {
         inputRef.current.focus();
       }
+      dispatch({type: "setTheme", payload: "dark"})
     };
 
     window.addEventListener('keydown', onKeyDown);
@@ -41,10 +42,7 @@ export default function TypingArea() {
 
   return (
     <>
-      {/* Box */}
       <TypingInput ref={inputRef} text={list.join(' ')} time={time} />
-
-      {/* Restart Button */}
       <button
         onClick={() => {
           inputRef.current.focus();
@@ -52,9 +50,9 @@ export default function TypingArea() {
         }}
         ref={buttonRef}
         tabIndex={2}
-        className='group relative z-40 mt-2 flex items-center rounded-lg border-0 px-4 py-2 text-fg/50 outline-none transition-colors duration-200 hover:text-fg focus:bg-hl focus:text-bg active:bg-hl active:text-bg bg-gray-600'
+        className={`group relative z-40 mt-16  flex items-center rounded-lg border-0 px-4 py-2 px-4 text-fg/50 outline-none transition-colors duration-200 hover:text-fg focus:bg-hl focus:text-bg active:bg-hl active:text-bg bg-yellow-300 ${theme}`}
       >
-        <span>Reset</span>
+        <span className='text-gray-600 text-xl dark:text-white'>Reset</span>
         {/* <VscDebugRestart className='scale-x-[-1] transform text-2xl' /> */}
         {/* <Tooltip className='top-12 font-primary group-hover:translate-y-0 group-hover:opacity-100 group-focus:top-14 group-focus:translate-y-0 group-focus:opacity-100 group-active:top-14 group-active:translate-y-0 group-active:opacity-100'>
           Restart Test
