@@ -1,5 +1,5 @@
 "use client"
-import clsx from "clsx";
+//import clsx from "clsx";
 import * as React from "react";
 // import { SiNextdotjs, SiPrisma, SiReact, SiTailwindcss } from 'react-icons/si';
 
@@ -7,10 +7,10 @@ import Kbd from "@/components/Kbd";
 import AnimateFade from "@/components/Layout/AnimateFade";
 import ArrowLink from "@/components/Link/ArrowLink";
 import UnderlineLink from "@/components/Link/UnderlineLink";
-import Seo from "@/components/Seo";
+//import Seo from "@/components/Seo";
 import Tooltip from "@/components/Tooltip";
 
-import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
+//import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
 
 // const techs = [
 //   { icon: <SiNextdotjs />, key: 'nextjs' },

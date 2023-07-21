@@ -4,9 +4,9 @@ import * as React from 'react';
 import { CgSpinner } from 'react-icons/cg';
 
 import Footer from '@/components/Layout/Footer';
-import Seo from '@/components/Seo';
+// import Seo from '@/components/Seo';
 
-import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
+import { usePreferenceContext } from '@/context';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const {
@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       {isClient ? (
         <>
-          <Seo title='Monkeytype Clone' />
+          {/* <Seo title='Monkeytype Clone' /> */}
           <div
             className={clsx(
               theme,

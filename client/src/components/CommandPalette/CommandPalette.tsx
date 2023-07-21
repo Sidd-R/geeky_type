@@ -11,7 +11,7 @@ import {
   handleSelect,
 } from '@/components/CommandPalette/functions';
 
-import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
+import { usePreferenceContext } from '@/context';
 
 const CommandPalette = ({ data }: { data: CommandType[] }) => {
   const {

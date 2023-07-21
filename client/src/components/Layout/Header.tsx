@@ -17,7 +17,7 @@ import useProfile from '@/hooks/useProfile';
 
 import Tooltip from '@/components/Tooltip';
 
-import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
+import { usePreferenceContext } from '@/context';
 
 const typeList = ['words', 'sentences', 'numbers'];
 
@@ -31,14 +31,15 @@ export default function Header() {
 
   const { user } = useProfile();
 
-  const { pathname } = useRouter();
+  // const { pathname } = useRouter();
+  const pathname = '/'
 
   return (
     <header className={clsx('layout bg-transparent font-primary')}>
       <div className='flex w-full flex-col items-center justify-between space-y-2 pt-12 sm:flex-row sm:space-y-0 sm:space-x-6'>
         <div className='group flex w-full items-center justify-start space-x-6 sm:w-auto'>
           <Link href='/'>
-            <a>
+            {/* <a> */}
               <div className='flex space-x-1'>
                 <TbKeyboard
                   className={clsx(
@@ -67,7 +68,7 @@ export default function Header() {
                   </span>
                 </div>
               </div>
-            </a>
+            {/* </a> */}
           </Link>
         </div>
 
@@ -76,14 +77,14 @@ export default function Header() {
             <div className='relative'>
               <div className='peer'>
                 <Link href='/solo'>
-                  <a>
+                  {/* <a> */}
                     <FaKeyboard
                       className={clsx(
                         'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
                         { 'fill-hl': pathname === '/solo' }
                       )}
                     />
-                  </a>
+                  {/* </a> */}
                 </Link>
               </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
@@ -93,14 +94,14 @@ export default function Header() {
             <div className='relative'>
               <div className='peer'>
                 <Link href='/leaderboard'>
-                  <a>
+                  {/* <a> */}
                     <FaCrown
                       className={clsx(
                         'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
                         { 'fill-hl': pathname === '/leaderboard' }
                       )}
                     />
-                  </a>
+                  {/* </a> */}
                 </Link>
               </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
@@ -110,14 +111,14 @@ export default function Header() {
             <div className='relative'>
               <div className='peer'>
                 <Link href='/about'>
-                  <a>
+                  {/* <a> */}
                     <FaInfo
                       className={clsx(
                         'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
                         { 'fill-hl': pathname === '/about' }
                       )}
                     />
-                  </a>
+                  {/* </a> */}
                 </Link>
               </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
@@ -127,14 +128,14 @@ export default function Header() {
             <div className='relative'>
               <div className='peer'>
                 <Link href='/multiplayer'>
-                  <a>
+                  {/* <a> */}
                     <RiTeamFill
                       className={clsx(
                         'cursor-pointer fill-hl/50 text-lg transition-colors duration-200 hover:fill-hl',
                         { 'fill-hl': pathname === '/multiplayer' }
                       )}
                     />
-                  </a>
+                  {/* </a> */}
                 </Link>
               </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>
@@ -144,7 +145,7 @@ export default function Header() {
             <div className='relative'>
               <div className='peer'>
                 <Link href='/account'>
-                  <a>
+                  {/* <a> */}
                     <div className='group flex h-full cursor-pointer gap-2 transition-colors duration-200 '>
                       {user ? (
                         <FaUser
@@ -171,7 +172,7 @@ export default function Header() {
                         {user?.name}
                       </span>
                     </div>
-                  </a>
+                  {/* </a> */}
                 </Link>
               </div>
               <Tooltip className='cursor-default peer-hover:translate-y-0 peer-hover:opacity-100'>

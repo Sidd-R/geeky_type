@@ -6,6 +6,11 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
       boxShadow: {
         b: '0 4px 0',
       },
@@ -15,6 +20,8 @@ module.exports = {
       },
       fontFamily: {
         primary: ['var(--font-family)', ...fontFamily.sans],
+        inter: ['Inter','sans-serif'],
+        satoshi: ['satoshi','sans-serif'],
       },
       colors: {
         bg: 'rgb(var(--bg-color) / <alpha-value>)',
