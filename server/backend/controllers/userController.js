@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const Test = require("../models/testModel");
+const mongoose = require("mongoose");
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -71,6 +73,32 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+const getMe = asyncHandler(async (req, res) => {
+  const { id } = req.query;
+
+  const user = await User.findById(id);
+
+  if (user) {
+    const allTestData = await Test.find({ userId: id });
+    const sortedTestData = allTestData.sort((a, b) => b.testNo - a.testNo);
+    
+    const top20RecentTestData = sortedTestData.slice(0, 20);
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      maxScore: user.maxScore,
+      avgScore: user.avgScore,
+      noOfTests: user.noOfTests,
+      top20RecentTestData,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
@@ -80,4 +108,5 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  getMe,
 };
