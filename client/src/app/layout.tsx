@@ -3,15 +3,15 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import PreferenceProvider from "@/context";
-/*import { AnimatePresence } from "framer-motion";*/
+import { AnimatePresence } from "framer-motion";
 import { AppProps } from "next/app";
-// import { SessionProvider } from "next-auth/react";*/
+import { SessionProvider } from "next-auth/react";
 import { MdClose } from "react-icons/md";
 // import { ToastContainer } from "react-toastify";
 
 import "@/styles/globals.css";
 import "@/styles/theme.css";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 
 import commands from "@/data/commands";
 
@@ -39,7 +39,7 @@ export default function RootLayout({
           <CommandPalette data={commands} />
           {/* <SessionProvider session={session}> */}
           {/* <Layout> */}
-          {/*<ToastContainer
+          {/* <ToastContainer
             toastClassName={() =>
               "relative flex p-1 mt-4 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer bg-hl text-bg border-2 border-hl mx-4"
             }
@@ -49,7 +49,7 @@ export default function RootLayout({
             closeButton={() => (
               <MdClose className="text-bg/80 transition-colors duration-200 hover:text-bg" />
             )}
-          />*/}
+          /> */}
           {/* <AnimatePresence exitBeforeEnter> */}
           {/* <Component {...pageProps} key={router.route} /> */}
           {/* </AnimatePresence> */}
