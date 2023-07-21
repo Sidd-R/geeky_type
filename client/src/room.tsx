@@ -12,7 +12,7 @@ import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 // import {  } from './types';
 
 import {useReducer,useContext,createContext,useEffect} from 'react';
-import { RoomContextValues,Action, RoomState,ProviderState, RoomAction, PreferenceState } from '@/types';
+import { RoomContextValues,Action, RoomState,ProviderState, RoomAction, PreferenceState, Player } from '@/types';
 const PreferenceContext = createContext({} as ProviderState);
 
 const reducer = (state: RoomState, action: RoomAction): RoomState => {
@@ -114,9 +114,9 @@ const reducer = (state: RoomState, action: RoomAction): RoomState => {
 
 const socket = io(
   'http://localhost:8080/public',
-  // {
-    // autoConnect: false,
-  // }
+  {
+    autoConnect: false,
+  }
 );
 
 const RoomContext = React.createContext({} as RoomContextValues);
@@ -178,19 +178,31 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
 
   // const { pathname } = useRouter();
   const pathname = usePathname()
+  const router = useRouter()
 
   socket.on('connect', () => {
     dispatch({ type: 'SET_USER_ID', payload: socket.id });
+    // if (pathname == '/multiplayer/start') router.push('/multiplayer')
   });
 
   socket.on('disconnect', () => {
     dispatch({ type: 'SET_IS_READY', payload: false });
     dispatch({ type: 'SET_ROOM_ID', payload: null });
+    // if (pathname != '/multiplayer/start') router.push('/multiplayer')
   });
 
   React.useEffect(() => {
+    // console.log( "user form uod",room.user,pathname);
+    
     if (room.user.id && room.user.roomId) {
+      console.log("updateee");
+      
       socket.emit('room update', room.user);
+      socket.on('room update', (players: Player[]) => {
+        // console.log("got an update",players);
+        
+        dispatch({ type: 'SET_PLAYERS', payload: players });
+      });
     }
 
     if (pathname === '/multiplayer' && room.user.roomId && room.user.id) {
@@ -199,6 +211,8 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
 
     socket.connect();
   }, [pathname, room.user]);
+
+
 
   return (
     <RoomContext.Provider

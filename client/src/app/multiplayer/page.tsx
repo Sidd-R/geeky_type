@@ -58,11 +58,14 @@ export default function MultiplayerPage() {
   const [isJoiningRoom, setIsJoiningRoom] = useState(false);
 
   const joinRandomRoom = () => {
-    setIsJoiningRoom(true)
+    // setIsJoiningRoom(true)
     // socket.connect()
-    console.log("join bruh");
     
-    socket.emit('joinRandomRoom')
+    // console.log("hi");
+    
+    dispatch({type: 'SET_USER_ID',payload:socket.id})
+    router.push('/multiplayer/start')
+
   }
 
   const createNewRoom = () => {
@@ -81,7 +84,7 @@ export default function MultiplayerPage() {
     // socket.off('room already exist').on('room already exist', () => {
     //   createRoom(socket, mode);
     // });
-
+// 
     // socket.off('end game').on('end game', () => {
     //   dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });
     //   dispatch({ type: 'SET_IS_READY', payload: false });
@@ -114,12 +117,12 @@ export default function MultiplayerPage() {
       <main>
         <section>
           <div className='layout flex min-h-[65vh] w-full flex-col items-center pt-10 text-center font-primary'>
-            <div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between'>
-              {/* <ChatBox
+          {/*<div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between'>
+                 <ChatBox
                 className='right-3 w-[calc(100%+0.5rem)] sm:right-2'
                 label='public chat'
-              /> */}
-            </div>
+              /> 
+            </div> */}
             <div className='flex w-full flex-col gap-4'>
               <RiTeamFill className='self-center text-[5rem] text-fg' />
               <h1 className='mb-2'>multiplayer mode</h1>

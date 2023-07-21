@@ -2,9 +2,10 @@ import clsx from 'clsx';
 import * as React from 'react';
 import { FaCrown } from 'react-icons/fa';
 
-import { useRoomContext } from '@/context/Room/RoomContext';
+import { useRoomContext } from '@/room';
 
 import Skeleton from './Skeleton';
+import { Player } from '@/types';
 
 export default function Players() {
   const {
@@ -15,6 +16,16 @@ export default function Players() {
       winner,
     },
   } = useRoomContext();
+  let set = new Set()
+  let newP:Array<Player> = []
+  players.forEach((e,i) => {
+    if (!set.has(e.id)) {
+      newP.push(e)
+      set.add(e.id)
+    } 
+  })
+
+  
 
   return (
     <div
@@ -22,13 +33,13 @@ export default function Players() {
         'z-20 -mt-16 mb-24 flex w-full max-w-[950px] flex-wrap items-center gap-x-8 gap-y-4 font-primary transition-colors duration-200 hover:text-hl'
       )}
     >
-      {players.length === 0 && (
+      {/* {players.length === 0 && (
         <>
           <Skeleton />
           <Skeleton />
         </>
-      )}
-      {players.map((player) =>
+      )} */}
+      {newP.map((player) =>
         player.id === id ? (
           <div
             key={player.id}

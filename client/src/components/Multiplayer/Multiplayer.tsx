@@ -3,16 +3,16 @@ import * as React from 'react';
 
 import TypingInput from '@/components/Multiplayer/TypingInput';
 
-import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
-import { useRoomContext } from '@/context/Room/RoomContext';
+import { usePreferenceContext } from '@/context';
+import { useRoomContext } from '@/room';
 
 export default function Multiplayer() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const _ = require('lodash');
 
-  const {
-    preferences: { isOpen },
-  } = usePreferenceContext();
+  // const {
+  //   preferences: { isOpen },
+  // } = usePreferenceContext();
 
   const {
     room: {
@@ -25,9 +25,9 @@ export default function Multiplayer() {
     timeBeforeRestart,
   } = useRoomContext();
 
-  React.useEffect(() => {
-    isChatOpen && inputRef.current.blur();
-  }, [isChatOpen]);
+  // React.useEffect(() => {
+  //   isChatOpen && inputRef.current.blur();
+  // }, [isChatOpen]);
 
   React.useEffect(() => {
     isPlaying && inputRef.current.focus();
@@ -36,7 +36,7 @@ export default function Multiplayer() {
 
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (isOpen || isChatOpen) return;
+      // if (isOpen || isChatOpen) return;
       if (event.key === 'tab') {
         buttonRef.current.focus();
       } else if (event.key !== 'Enter' && !event.ctrlKey && isPlaying) {
@@ -46,7 +46,7 @@ export default function Multiplayer() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen, isChatOpen, isPlaying]);
+  }, [isChatOpen, isPlaying]);
 
   const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const buttonRef = React.useRef() as React.MutableRefObject<HTMLButtonElement>;

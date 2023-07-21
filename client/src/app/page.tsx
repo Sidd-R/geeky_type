@@ -70,7 +70,7 @@ export default function HomePage() {
                 name="nickname"
                 id="nickname"
                 maxLength={20}
-                defaultValue={localStorage?.getItem("nickname") || ""}
+                // defaultValue={localStorage?.getItem("nickname") || ""}
                 onBlur={(e) => {
                   if (!e.target.value) return;
                   dispatch({ type: "SET_NICKNAME", payload: e.target.value });

@@ -3,12 +3,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BsCursorFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
 
-import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
-import { useRoomContext } from '@/context/Room/RoomContext';
+import { usePreferenceContext } from '@/context';
+import { useRoomContext } from '@/room';
 
 import Players from './Players';
 import Code from './RoomCode';
-import ChatBox from '../Chat/ChatBox';
+// import ChatBox from '../Chat/ChatBox';
 
 type TypingInputProps = React.ComponentPropsWithRef<'input'>;
 
@@ -19,27 +19,27 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const letterElements = useRef<HTMLDivElement>(null);
     // eslint-disable-next-line unused-imports/no-unused-vars
     const [currentTime, setCurrentTime] = useState(() => Date.now());
-
-    const {
-      preferences: { isOpen },
-    } = usePreferenceContext();
-
+  
     const {
       room: {
         text,
         isPlaying,
         isFinished,
-        isChatOpen,
         socket,
         winner,
         mode,
-        user: { roomId, id, isOwner },
+        players,
+        user: { roomId, },
       },
       dispatch,
       timeBeforeRestart,
     } = useRoomContext();
 
     React.useEffect(() => {
+      console.log(text);
+      console.log("Players",players);
+      
+      
       let progress = Math.floor(((currIndex + 1) / text.length) * 100);
       const wpm =
         duration === 0
@@ -47,8 +47,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           : Math.ceil(((60 / duration) * correctChar) / 5);
 
       if (isFinished) {
+        console.log("wwonnnnnnnnnnnnnn");
+        
         progress = 100;
-        !winner && socket.emit('end game', roomId, mode);
+        !winner && socket.emit('end game', roomId,mode);
       }
 
       dispatch({ type: 'SET_STATUS', payload: { wpm, progress } });
@@ -73,11 +75,16 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     // set cursor
     const pos = useMemo(() => {
+
       if (text.length !== 0 && currIndex + 1 === text.length) {
+        console.log("I HAVE FINISBED...");
+        
         dispatch({ type: 'SET_IS_FINISHED', payload: true });
       }
       if (currIndex !== -1 && letterElements.current) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-anylog
+        console.log('complete');
+        
         const spanref: any = letterElements.current.children[currIndex];
 
         const left = spanref.offsetLeft + spanref.offsetWidth - 2;
@@ -99,20 +106,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currIndex, text.length]);
 
-    useEffect(() => {
-      if (id && roomId) {
-        socket.off('words generated').on('words generated', (text: string) => {
-          dispatch({ type: 'SET_TEXT', payload: text });
-          setValue('');
-          setMargin(0);
-          setCurrentTime(Date.now());
-          endTyping();
-          resetTyping();
-        });
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, roomId]);
-
     //set WPM
     useEffect(() => {
       if (phase === 2 && endTime && startTime) {
@@ -123,6 +116,37 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [phase, startTime, endTime, ref]);
+
+    
+    useEffect(() => {
+      console.log(typeof(text),text);
+      if (isPlaying) {
+        dispatch({type: 'SET_IS_PLAYING',payload:true})
+        setValue('');
+        setMargin(0);
+        setCurrentTime(Date.now());
+        endTyping();
+        resetTyping();
+      } else {
+        socket.on("start game", () => {
+          // console.log("why wont it work??");
+          
+          dispatch({type: 'SET_IS_PLAYING',payload:true})
+          setValue('');
+          setMargin(0);
+          setCurrentTime(Date.now());
+          endTyping();
+          resetTyping();
+        })
+      }
+      
+      
+     
+      
+      return () => {
+      }
+    }, [])
+
 
     //handle key presses
     const handleKeyDown = (letter: string, control: boolean) => {
@@ -156,27 +180,27 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     return (
       <>
         <div className='relative bottom-[5.5rem] flex w-full max-w-[950px] items-center justify-between'>
-          <Code />
-          <ChatBox
+          {/* <Code /> */}
+          {/* <ChatBox
             isRoomChat
             className='right-3 w-[calc(100%+2rem)] sm:right-2'
             label='chat'
-          />
+          /> */}
         </div>
         <Players />
 
         <div className='relative w-full max-w-[950px]'>
           <div
             className={clsx(
-              'pointer-events-none fixed inset-0 h-screen w-screen bg-bg transition-opacity duration-200',
+              'pointer-events-none fixed inset-0 h-screen w-screen transition-opacity duration-200',
               { 'opacity-0': !isFocused },
               className
             )}
           ></div>
           <span className='absolute left-0 -top-[4rem] flex items-center gap-2 text-4xl text-fg/80'>
-            <span className='inline-block w-20 rounded-sm bg-font/40 px-2 py-1 text-left'>
+            <span className='inline-block w-20 rounded-sm text-fg/80 px-1 py-1 text-right '>
               {currIndex + 1}
-            </span>{' '}
+            </span>{''}
             /{' '}
             {!text.length ? (
               <div className='flex flex-col gap-1'>
@@ -200,7 +224,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           >
             <input
               type='text'
-              className='absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0'
+              className='absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0 '
               tabIndex={isPlaying ? 1 : -1}
               ref={ref}
               onFocus={() => setIsFocused(true)}
@@ -217,10 +241,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 });
               }}
               onKeyDown={(e) => {
-                if (isOpen || isChatOpen) {
-                  setIsFocused(false);
-                  return;
-                }
+                // if (isOpen || isChatOpen) {
+                //   setIsFocused(false);
+                //   return;
+                // }
                 if (e.ctrlKey) return;
                 if (
                   ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(
@@ -230,7 +254,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                   e.preventDefault();
               }}
             />
-            <div
+            {/* <div
               className={clsx(
                 'absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200',
                 { 'opacity-0': !isFocused }
@@ -241,12 +265,12 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 'absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200',
                 { 'opacity-0': !isFocused }
               )}
-            ></div>
+            ></div> */}
 
             {isPlaying ? (
               <span
                 className={clsx(
-                  'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',
+                  'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base  transition-all duration-200 opacity-0',
                   { 'text-fg opacity-100 ': !isFocused }
                 )}
               >
@@ -257,21 +281,21 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
             ) : (
               <span
                 className={clsx(
-                  'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',
+                  'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base transition-all duration-200 opacity-0',
                   { 'text-fg opacity-100 ': !isFocused }
                 )}
               >
                 {' '}
                 {timeBeforeRestart && !winner
                   ? `Starting in ${timeBeforeRestart}`
-                  : isOwner
-                  ? 'Waiting for you to start the game'
-                  : 'Waiting for owner to start the game'}
+                  // : isOwner
+                  // ? 'Waiting for you to start the game'
+                  : 'Waiting for other players to join'}
               </span>
             )}
             <div
               className={clsx(
-                'absolute top-0 left-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200',
+                'absolute top-0 left-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200 ',
                 { 'opacity-40 blur-[8px]': !isFocused }
               )}
             >
