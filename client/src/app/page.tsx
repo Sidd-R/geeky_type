@@ -17,11 +17,11 @@ import { useRoomContext } from "@/room";
 export default function HomePage() {
   const router = useRouter();
 
+  const {dispatch} = useRoomContext();
+
   const methods = useForm<{ code: string }>({
     mode: "onTouched",
   });
-
-  const { dispatch } = useRoomContext();
 
   return (
     <AnimateFade>
@@ -70,7 +70,6 @@ export default function HomePage() {
                 name="nickname"
                 id="nickname"
                 maxLength={20}
-                // defaultValue={localStorage?.getItem("nickname") || ""}
                 onBlur={(e) => {
                   if (!e.target.value) return;
                   dispatch({ type: "SET_NICKNAME", payload: e.target.value });

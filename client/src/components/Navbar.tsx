@@ -1,8 +1,9 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BellIcon, XMarkIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
+import Cookies from "js-cookie";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -17,6 +18,17 @@ function classNames(...classes: (string | undefined | null | false)[]) {
 
 const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const jwt_token = Cookies.get('jwt_token');
+    setIsUserLoggedIn(!!jwt_token);
+  },[])
+
+  const logOut = () => {
+    Cookies.remove("jwt_token");
+    setIsUserLoggedIn(false);
+  }
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -43,11 +55,13 @@ const Navbar = () => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex items-center">
+                  <a href="/">
                   <img
                     className="h-8 w-auto mr-2"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src="/assets/images/logo.png"
                     alt="Your Company"
                   />
+                  </a>
                   <p className="logo_text">GeekyType</p>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -77,23 +91,20 @@ const Navbar = () => {
                   className="inline-flex items-center justify-center rounded-full text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
                 >
                   {isDarkMode ? (
-                    <SunIcon className="h-6 w-6" aria-hidden="true" />
-                  ) : (
                     <MoonIcon className="h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <SunIcon className="h-6 w-6" aria-hidden="true" />
                   )}
                 </button>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+                {/* Profile dropdown */} 
+                {isUserLoggedIn ? (
+                  <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-100 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
+                      <UserCircleIcon className="h-8 w-8 text-gray-700" />
                     </Menu.Button>
                   </div>
                   <Transition
@@ -109,7 +120,7 @@ const Navbar = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/profile"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -121,33 +132,26 @@ const Navbar = () => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
+                          <button
+                            onClick={logOut}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>
                 </Menu>
+                ): (
+                  <>
+                  <a href='/auth' className="text-gray-700 hidden sm:block hover:bg-gray-100 hover:text-gray-900 rounded-md px-3 py-2 text-sm font-medium">Login/SignUp</a>
+                  <a href="/auth"><UserCircleIcon className="h-8 w-8 text-gray-700 sm:hidden" /></a>
+                  </>
+                )}
               </div>
             </div>
           </div>

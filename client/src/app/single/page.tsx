@@ -1,5 +1,7 @@
+"use client";
 import TypingArea from '@/components/TypingArea';
 import * as React from 'react';
+import { ToastContainer } from 'react-toastify';
 
 // import Box from '@/components/Game/Box';
 // import Kbd from '@/components/Kbd';
@@ -36,6 +38,7 @@ export default function SoloPage() {
             </div> */}
           </div>
         </section>
+        <ToastContainer />
       </main>
     {/* </AnimateFade> */}
     </>

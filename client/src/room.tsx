@@ -6,7 +6,7 @@ import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
 // import useProfile from '@/hooks/useProfile';
 
-// import reducer from './reducer';
+//import reducer from './reducer';
 // import {  } from './types';
 
 // import {  } from './types';
@@ -205,7 +205,9 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       });
     }
 
-    if (pathname === '/multiplayer' && room.user.roomId && room.user.id) {
+    const isMultiplayer = !!pathname.match(/^\/multiplayer$/);
+
+    if (isMultiplayer && room.user.roomId && room.user.id) {
       socket.emit('leave room', room.user);
     }
 

@@ -19,6 +19,7 @@ import CommandPalette from "@/components/CommandPalette/CommandPalette";
 // import Header from "@/components/Layout/Header";
 import Layout from "@/components/Layout/Layout";
 import Navbar from "@/components/Navbar";
+import { usePreferenceContext } from "@/context";
 
 import { RoomProvider } from '@/room';
 
@@ -60,7 +61,7 @@ export default function RootLayout({
           <div className="main">
             <div className="gradient" />
           </div>
-          <main className="app">
+          <main className='app'>
             <Navbar />
             {children}
           </main>
