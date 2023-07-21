@@ -9,7 +9,7 @@ import useTyping from 'react-typing-game-hook';
 // 
 // import Tooltip from '@/components/Tooltip';
 
-import { usePreferenceContext } from '@/context';
+import { usePreferenceContext } from '@/context'; 
 
 type TypingInputProps = {
   text: string;
@@ -28,7 +28,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     // const { createLeaderboardData } = useLeaderboard();
 
     const {
-      preferences: { isOpen, zenMode, type },
+      preferences: { isOpen, type },
     } = usePreferenceContext();
 
     const {
@@ -107,13 +107,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
         const dur = Math.floor((endTime - startTime) / 1000);
         setDuration(dur);
 
-        // todo: create leaderboard
-        // createLeaderboardData({
-        //   name: user?.name || localStorage?.getItem('nickname') || 'guest',
-        //   wpm: Math.round(((60 / dur) * correctChar) / 5),
-        //   time: parseInt(time),
-        //   type: type || 'words',
-        // });
       } else {
         setDuration(0);
       }
@@ -138,21 +131,13 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     return (
       <div className='relative w-full max-w-[950px]'>
-        {zenMode && (
-          <div
-            className={clsx(
-              'pointer-events-none fixed inset-0 z-30 h-screen w-screen bg-bg transition-opacity duration-200',
-              { 'opacity-0': !isFocused }
-            )}
-          ></div>
-        )}
         <span className='absolute left-0 -top-[3.25rem] z-40 text-4xl text-fg/80'>
           {timeLeft}
         </span>
 
         <div
           className={clsx(
-            'relative z-40 h-[140px] w-full text-2xl outline-none'
+            'relative z-40 h-[200px] w-full text-2xl outline-none'
           )}
           onClick={() => {
             if (ref != null && typeof ref !== 'function') {
@@ -193,18 +178,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 e.preventDefault();
             }}
           />
-          <div
-            className={clsx(
-              'absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200',
-              { 'opacity-0': !isFocused }
-            )}
-          ></div>
-          <div
-            className={clsx(
-              'absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200',
-              { 'opacity-0': !isFocused }
-            )}
-          ></div>
           <span
             className={clsx(
               'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200',

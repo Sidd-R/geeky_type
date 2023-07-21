@@ -20,6 +20,8 @@ import Header from "@/components/Layout/Header";
 import Layout from "@/components/Layout/Layout";
 import Navbar from "@/components/Navbar";
 
+import { RoomProvider } from '@/room';
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -53,7 +55,7 @@ export default function RootLayout({
           {/* <AnimatePresence exitBeforeEnter> */}
           {/* <Component {...pageProps} key={router.route} /> */}
           {/* </AnimatePresence> */}
-          {/* <RoomProvider> */}
+          <RoomProvider>
           {/* <ChatProvider> */}
           <div className="main">
             <div className="gradient" />
@@ -63,7 +65,7 @@ export default function RootLayout({
             {children}
           </main>
           {/* </ChatProvider> */}
-          {/* </RoomProvider>  */}
+          </RoomProvider> 
           {/* </Layout> */}
           {/* </SessionProvider> */}
         </PreferenceProvider>

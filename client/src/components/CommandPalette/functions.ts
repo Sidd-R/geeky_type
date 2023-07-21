@@ -19,21 +19,7 @@ export const handleSelect = (
 ) => {
   switch (selected) {
     case 'theme':
-      dispatch({ type: 'SET_THEME', payload: value });
-      break;
-    case 'font family':
-      dispatch({ type: 'SET_FONT_FAMILY', payload: value });
-      break;
-    case 'type':
-      dispatch({ type: 'SET_TYPE', payload: value });
-      break;
-    case 'time':
-      dispatch({ type: 'SET_TIME', payload: value });
-      break;
-    case 'zen mode':
-      // eslint-disable-next-line no-case-declarations
-      const payload = value === 'on' ? true : false;
-      dispatch({ type: 'SET_ZEN_MODE', payload });
+      dispatch({ type: 'setTheme', payload: value });
       break;
     default:
       return false;
