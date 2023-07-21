@@ -124,28 +124,28 @@ export default function MultiplayerPage() {
               /> 
             </div> */}
             <div className='flex w-full flex-col gap-4'>
-              <RiTeamFill className='self-center text-[5rem] text-fg' />
-              <h1 className='mb-2'>multiplayer mode</h1>
+              <RiTeamFill className='self-center text-[5rem] text-orange-400' />
+              <h1 className='mb-4  text-bg'>multiplayer mode</h1>
               {/* <FormProvider {...methods}> */}
                 {/* <form onSubmit={onSubmit}> */}
                 <div className='flex items-center justify-center space-x-4 '>
                 <Button
                   onClick={joinRandomRoom}
                   disabled={isJoiningRoom}
-                  className={`${isJoiningRoom && 'cursor-not-allowed'} mb-0 bg-yellow-300`}
+                  className={`${isJoiningRoom && 'cursor-not-allowed'} mb-0 bg-orange-300`}
                 >
                   {isJoiningRoom ? (
-                    <span className='flex items-center text-bg bg-yellow-300'>
+                    <span className='flex items-center text-bg bg-orange-300'>
                       Joining
                       <CgSpinner className='ml-2 animate-spin' />
                     </span>
-                  ) : <span className='text-gray-600 mx-3'> Join Random Room</span>}
+                  ) : <span className='text-bg mx-3'> Join Random Room</span>}
                 </Button>
               </div>
                 {/* </form> */}
               {/* </FormProvider> */}
 
-              <span className='mb-4 text-3xl font-bold'>or</span>
+              <span className='mb-7  text-3xl font-bold'>or</span>
               {/* <div className='mx-auto mb-4 flex space-x-2 font-primary'>
                 <button
                   onClick={() =>
@@ -192,17 +192,17 @@ export default function MultiplayerPage() {
                     // createRoom(socket);
                   }}
                   disabled={isJoiningRoom}
-                  className={`${isJoiningRoom && 'cursor-not-allowed'} mb-0 bg-yellow-300`}
+                  className={`${isJoiningRoom && 'cursor-not-allowed'} mb-0 bg-orange-300`}
                 >
                   {isJoiningRoom ? (
-                    <span className='flex items-center text-bg bg-yellow-300'>
+                    <span className='flex items-center text-bg bg-orange-300'>
                       Creating
                       <CgSpinner className='ml-2 animate-spin' />
                     </span>
-                  ) : <span className='text-gray-600 mx-3'> Create New Room</span>}
+                  ) : <span className='text-bg mx-3'> Create New Room</span>}
                 </Button>
               </div>
-              <span className='mb-4 text-3xl font-bold'>or</span>
+              <span className='mb-8 text-3xl font-bold'>or</span>
               
               <div className='mx-auto -mb-2 flex max-w-[330px] justify-center  p-0 items-center'>
                     <input
@@ -212,15 +212,15 @@ export default function MultiplayerPage() {
                       placeholder='enter room code'
                       className='flex-1 rounded-r-none h-12 px-4 shadow-none bg-gray-200 rounded-lg'
                     />
-                  <div className='bg-yellow-300 h-12 px-3 flex justify-center items-center rounded-lg rounded-l-none '
+                  <div className='bg-orange-300 h-12 px-3 flex justify-center items-center rounded-lg rounded-l-none '
                     onClick={joinUsingCode}
                   >
                   {isJoiningRoom ? (
-                    <span className='flex items-center text-bg bg-yellow-300'>
+                    <span className='flex items-center text-bg bg-orange-300'>
                       Joining
                       <CgSpinner className='ml-2 animate-spin' />
                     </span>
-                  ) : <span className='text-gray-600 '>Join</span>}
+                  ) : <span className='text-bg '>Join</span>}
                   </div>
                   </div>
             </div>

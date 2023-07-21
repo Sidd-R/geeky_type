@@ -4,21 +4,30 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
+import { usePathname } from "next/navigation";
+import { usePreferenceContext } from "@/context";
 
-const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Solo", href: "/single", current: false },
-  { name: "Multiplayer", href: "/multiplayer", current: false },
-  { name: "About", href: "/about", current: false },
-];
+
+
 
 function classNames(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Navbar = () => {
+  const path = usePathname()
+  
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  const {preferences:{theme},dispatch} = usePreferenceContext()
+ 
+  const navigation = [
+    { name: "Home", href: "/", current: path == "/" },
+    { name: "Solo", href: "/single", current: path == "/single" },
+    { name: "Multiplayer", href: "/multiplayer", current: path == "/multiplayer" },
+    { name: "About", href: "/about", current: path == "/about" },
+  ];
 
   useEffect(() => {
     const jwt_token = Cookies.get('jwt_token');
@@ -32,6 +41,10 @@ const Navbar = () => {
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
+    if (theme == "dark")
+      dispatch({type:"setTheme",payload:"dark"})
+    else 
+    dispatch({type:"setTheme",payload:"light"})
   };
   return (
     <Disclosure
