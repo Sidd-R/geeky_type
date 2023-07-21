@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node backend/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q backend/index.js\""
+    "server": "nodemon backend/index.js",
+
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.4.0",
     "nodemon": "^3.0.1",
-    "socket.io": "^4.7.1"
+    "socket.io": "^4.7.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",

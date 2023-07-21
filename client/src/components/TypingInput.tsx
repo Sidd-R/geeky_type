@@ -22,6 +22,10 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
     const [realTimeWPM, setRealTimeWPM] = useState(0);
 
+    // const { user } = useProfile();
+
+    // const { createLeaderboardData } = useLeaderboard();
+
     const {
       states: {
         charsState,
@@ -174,14 +178,14 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     }, [phase, startTime, correctChar]);
 
     return (
-      <div className="relative w-full max-w-[950px]">
-        <span className="absolute left-0 -top-[3.25rem] z-40 text-4xl text-fg/80">
+      <div className='relative w-full max-w-[950px]'>
+        <span className='absolute left-0 -top-[3.25rem] z-40 text-4xl text-fg/80'>
           {timeLeft}
         </span>
 
         <div
           className={clsx(
-            "relative z-40 h-[200px] w-full text-2xl outline-none"
+            'relative z-40 h-[200px] w-full text-2xl outline-none'
           )}
           onClick={() => {
             if (ref != null && typeof ref !== "function") {

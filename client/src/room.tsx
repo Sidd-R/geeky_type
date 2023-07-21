@@ -1,10 +1,10 @@
 'use client'
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { io } from 'socket.io-client';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
-import useProfile from '@/hooks/useProfile';
+// import useProfile from '@/hooks/useProfile';
 
 //import reducer from './reducer';
 // import {  } from './types';
@@ -113,16 +113,16 @@ const reducer = (state: RoomState, action: RoomAction): RoomState => {
 
 
 const socket = io(
-  process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:8080',
-  {
-    autoConnect: false,
-  }
+  'http://localhost:8080/public',
+  // {
+    // autoConnect: false,
+  // }
 );
 
 const RoomContext = React.createContext({} as RoomContextValues);
 
 export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useProfile();
+  // const { user } = useProfile();
 
   const [room, dispatch] = React.useReducer(reducer, {
     text: '',
@@ -135,8 +135,6 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       isOwner: false,
       roomId: null,
       username:
-        localStorage?.getItem('nickname') ||
-        user?.name ||
         uniqueNamesGenerator({
           dictionaries: [animals],
           style: 'lowerCase',
@@ -179,7 +177,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
   }, [room.user.isReady]);
 
   // const { pathname } = useRouter();
-  const pathname = '/'
+  const pathname = usePathname()
 
   socket.on('connect', () => {
     dispatch({ type: 'SET_USER_ID', payload: socket.id });

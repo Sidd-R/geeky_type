@@ -8,7 +8,7 @@ import Image from "next/image";
 import Button from "@/components/Button/Button";
 // import ChatBox from '@/components/Chat/ChatBox';
 import Input from "@/components/Input";
-import Kbd from "@/components/Kbd";
+// import Kbd from "@/components/Kbd";
 import AnimateFade from "@/components/Layout/AnimateFade";
 // import Seo from '@/components/Seo';
 
@@ -25,7 +25,7 @@ export default function HomePage() {
 
   return (
     <AnimateFade>
-      {/* <Seo title='Monkeytype Clone' /> */}
+      {/* <Seo title='Geeky  Type' /> */}
 
       <main>
         <section className="w-full flex-center flex-col mt-10">
