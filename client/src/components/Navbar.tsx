@@ -1,7 +1,8 @@
 "use client";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -15,8 +16,16 @@ function classNames(...classes: (string | undefined | null | false)[]) {
 }
 
 const Navbar = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
   return (
-    <Disclosure as="nav" className="bg-white border-b border-gray-200">
+    <Disclosure
+      as="nav"
+      className="bg-white border-b border-gray-200 shadow relative"
+    >
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -60,6 +69,19 @@ const Navbar = () => {
                     ))}
                   </div>
                 </div>
+              </div>
+              <div className="absolute inset-y-0 right-12 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                {/* Add the icon button for dark mode */}
+                <button
+                  onClick={toggleDarkMode}
+                  className="inline-flex items-center justify-center rounded-full text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                >
+                  {isDarkMode ? (
+                    <SunIcon className="h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <MoonIcon className="h-6 w-6" aria-hidden="true" />
+                  )}
+                </button>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Profile dropdown */}
