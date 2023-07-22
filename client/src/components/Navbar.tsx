@@ -20,7 +20,7 @@ const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  const {preferences:{theme,type,time},dispatch} = usePreferenceContext()
+  const {preferences:{theme,type,time},dispatch} = usePreferenceContext();
  
   const navigation = [
     { name: "Home", href: "/", current: path == "/" },
