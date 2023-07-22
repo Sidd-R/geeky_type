@@ -11,20 +11,24 @@ import Input from "@/components/Input";
 // import Kbd from "@/components/Kbd";
 import AnimateFade from "@/components/Layout/AnimateFade";
 // import Seo from '@/components/Seo';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from "react";
 
 import { useRoomContext } from "@/room";
 
 export default function HomePage() {
   const router = useRouter();
 
-  const {dispatch} = useRoomContext();
+  const { dispatch } = useRoomContext();
 
   const methods = useForm<{ code: string }>({
     mode: "onTouched",
   });
 
-  const [leaderBoard, setLeaderBoard] = useState({avgScore:0,noOfTests:0,testsWithUsername:[]});
+  const [leaderBoard, setLeaderBoard] = useState({
+    avgScore: 0,
+    noOfTests: 0,
+    testsWithUserName: [],
+  });
 
   useEffect(() => {
     const apiUrl = "http://localhost:5000/api/test/all";
@@ -85,15 +89,18 @@ export default function HomePage() {
               ></iframe>
             </div> */}
             <div className="glassmorphism mt-5 w-[90%] flex flex-row justify-evenly gap-4">
-            <div>
+              <div>
                 <h4 className="text-gray-800">Games Played</h4>
                 <p className="text-gray-800">{leaderBoard.noOfTests}</p>
-            </div>
-            <div>
+              </div>
+              <div>
                 <h4 className="text-gray-800">Avg Score</h4>
-                <p className="text-gray-800"> {leaderBoard.avgScore.toFixed(2)} WPM</p>
+                <p className="text-gray-800">
+                  {" "}
+                  {leaderBoard.avgScore.toFixed(2)} WPM
+                </p>
+              </div>
             </div>
-          </div>
             <div className="flex flex-col items-center px-2 w-full lg:flex-row md:justify-around">
               <div className="max-w-sm my-5 p-5 rounded-md flex flex-row items-center prompt_card">
                 <Image
@@ -142,62 +149,82 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="max-w-sm my-5 p-5 rounded-md flex flex-row items-center prompt_card">
-                <Image
-                  src="/assets/images/challenge.jpg"
-                  alt=""
-                  width={500}
-                  height={500}
-                  className="object-cover object-center md:w-48 w-40 h-40 rounded-md dark:bg-gray-500"
-                />
-                <div className="ml-6 flex flex-col items-center">
-                  <div className="mt-6 mb-2">
-                    <h2 className="text-xl font-semibold tracki orange_gradient">
-                      Play Against friends
-                    </h2>
-                  </div>
-                  <Button
-                    onClick={() => router.push("/multiplayer")}
-                    className="flex items-center"
-                  >
-                    <RiTeamFill className="mr-1" />
-                    Multiplayer
-                  </Button>
+              <Image
+                src="/assets/images/challenge.jpg"
+                alt=""
+                width={500}
+                height={500}
+                className="object-cover object-center md:w-48 w-40 h-40 rounded-md dark:bg-gray-500"
+              />
+              <div className="ml-6 flex flex-col items-center">
+                <div className="mt-6 mb-2">
+                  <h2 className="text-xl font-semibold tracki orange_gradient">
+                    Play Against friends
+                  </h2>
                 </div>
-              </div>
-              {/* <Button
-                onClick={() => router.push('/single')}
-                className='flex items-center'
-              >
-                <IoMdPerson className='mr-1' />
-                Play Solo
-              </Button>
-              <div>
                 <Button
-                  onClick={() => router.push('/multiplayer')}
-                  className='flex items-center'
+                  onClick={() => router.push("/multiplayer")}
+                  className="flex items-center"
                 >
-                  <RiTeamFill className='mr-1' />
+                  <RiTeamFill className="mr-1" />
                   Multiplayer
-                </Button> */}
+                </Button>
+              </div>
             </div>
-
-            {/* <div className='flex flex-col items-center justify-center gap-2 font-primary'>
-              <div className='flex items-center space-x-2 text-sm'>
-                <Kbd>tab</Kbd>
-                <span className='text-hl'> + </span>
-                <Kbd>enter</Kbd>
-                <span className='text-hl'> - restart test </span>
-              </div>
-              <div className='flex items-center space-x-2 text-sm'>
-                <Kbd>ctrl/cmd</Kbd>
-                <span className='text-hl'> + </span>
-                <Kbd>k</Kbd>
-                <span className='text-hl'> or </span>
-                <Kbd>p</Kbd>
-                <span className='text-hl'> - command palette </span>
-              </div>
-            </div> */}
           </div>
+          </div>
+          {leaderBoard.testsWithUserName &&
+          leaderBoard.testsWithUserName.length > 0 ? (
+            <div className="container p-2 mx-auto rounded-md sm:p-4 text-gray-800 bg-gray-100">
+              <h2 className="mb-3 text-2xl font-semibold leadi blue_gradient text-center">
+                Leaderboard
+              </h2>
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-xs">
+                  <thead className="rounded-t-lg bg-gray-200">
+                    <tr className="text-right">
+                      <th title="Ranking" className="p-3 text-left">
+                        #
+                      </th>
+                      <th title="Team name" className="p-3 text-left">
+                        UserName
+                      </th>
+                      <th title="Wins" className="p-3">
+                        UserEmail
+                      </th>
+                      <th title="Losses" className="p-3">
+                        Score
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {leaderBoard.testsWithUserName.map((data) => (
+                      <tr className="text-right border-b border-opacity-20 bg-gray-100 text-gray-800">
+                        <td className="px-3 py-2 text-left">
+                          <span className="text-gray-800">{data.testNo}</span>
+                        </td>
+                        <td className="px-3 py-2 text-left">
+                          <span className="text-gray-800">{data.userName}</span>
+                        </td>
+                        <td className="px-3 py-2">
+                          <span className="text-gray-800">
+                            {data.userEmail}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2">
+                          <span className="text-gray-800">
+                            {data.score} WPM
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : (
+            <p>Loading leaderBoard data...</p>
+          )}
         </section>
       </main>
     </AnimateFade>
