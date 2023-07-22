@@ -17,8 +17,18 @@ import { useRoomContext } from "@/room";
 
 export default function HomePage() {
   const router = useRouter();
-
-  const [leaderBoard, setLeaderBoard] = useState<{avgScore:number,noOfTests:number,testsWithUserName:Array<{userName:string,userEmail:string,testNo:string,score:string}>}>({
+  type TESTUARRAY =  Array<{
+      userName:string,
+      userEmail:string,
+      testNo:string,
+      score:string
+    }>
+  type LEADERBOARD = {
+    avgScore:number,
+    noOfTests:number,
+    testsWithUserName: TESTUARRAY
+  }
+  const [leaderBoard, setLeaderBoard] = useState<LEADERBOARD>({
     avgScore: 0,
     noOfTests: 0,
     testsWithUserName: [],
@@ -34,7 +44,19 @@ export default function HomePage() {
         return response.json();
       })
       .then((data) => {
+        let tempArr: TESTUARRAY = data.testsWithUserName
+        tempArr.sort((a,b) => parseInt(b.score)- parseInt(a.score))
         setLeaderBoard(data);
+        // for (let i =0 ; i < leaderBoard.testsWithUserName.length-1 ; i++) {
+        //   for (let j = i + 1 ; j < leaderBoard.testsWithUserName.length ; j++) {
+        //     if (leaderBoard.testsWithUserName[j].score > leaderBoard.testsWithUserName[i].score) {
+        //       let temp = leaderBoard.testsWithUserName[j]
+        //       leaderBoard.testsWithUserName[j] = leaderBoard.testsWithUserName[i]
+        //       leaderBoard.testsWithUserName[i] = temp
+        //     } 
+        //   }
+        // }
+        // leaderBoard.testsWithUserName = leaderBoard.testsWithUserName.
         console.log(leaderBoard);
       })
       .catch((error) => {
@@ -62,26 +84,6 @@ export default function HomePage() {
         </section>
         <section className="mb-10">
           <div className="flex flex-col items-center gap-8 pt-4 lg:pt-8 text-center">
-            {/* <ChatBox
-                className='right-3 w-[calc(100%+2rem)] sm:right-2'
-                label='public chat'
-              /> */}
-
-            {/* <div className='aspect-video w-full max-w-[450px] overflow-hidden rounded-lg ring-4 ring-fg ring-offset-4 ring-offset-bg'>
-              <iframe
-                src='https://www.youtube.com/embed/nnM9h7twXg8?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&enablejsapi=1&playlist=nnM9h7twXg8'
-                title='Monkeytype Clone'
-                frameBorder='0'
-                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                allowFullScreen
-                style={{
-                  width: '300%',
-                  height: '100%',
-                  marginLeft: '-100%',
-                  zIndex: 50,
-                }}
-              ></iframe>
-            </div> */}
             <div className="glassmorphism mt-5 w-[90%] flex flex-row justify-evenly gap-4">
               <div>
                 <h4 className="text-gray-800">Games Played</h4>
@@ -192,10 +194,11 @@ export default function HomePage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {leaderBoard.testsWithUserName.map((data) => (
+                    {leaderBoard.testsWithUserName.map((data,i) => {
+                      if (i < 10)  return (
                       <tr className="text-right border-b border-opacity-20 bg-gray-100 text-gray-800">
                         <td className="px-3 py-2 text-left">
-                          <span className="text-gray-800">{data.testNo}</span>
+                          <span className="text-gray-800">{i+1}</span>
                         </td>
                         <td className="px-3 py-2 text-left">
                           <span className="text-gray-800">{data.userName}</span>
@@ -210,8 +213,10 @@ export default function HomePage() {
                             {data.score} WPM
                           </span>
                         </td>
-                      </tr>
-                    ))}
+                      </tr>)
+                      }
+                    )
+                    }
                   </tbody>
                 </table>
               </div>
