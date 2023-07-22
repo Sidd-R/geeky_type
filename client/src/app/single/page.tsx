@@ -4,7 +4,7 @@ import * as React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { usePreferenceContext } from "@/context";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 // import Box from '@/components/Game/Box';
 // import Kbd from '@/components/Kbd';
 // import AnimateFade from '@/components/Layout/AnimateFade';
@@ -18,7 +18,18 @@ export default function SoloPage() {
     dispatch,
   } = usePreferenceContext();
   const [selectedDifficulty, setSelectedDifficulty] = useState(type);
-  const [selectedTime, setSelectedTime] = useState(time);
+  const [selectedTime, setSelectedTime] = useState("15");
+
+  useEffect(() => {
+    dispatch({ type: "setTime", payload: selectedTime });
+
+  }, [selectedTime])
+
+  useEffect(() => {
+    dispatch({ type: "setType", payload: selectedDifficulty });
+
+  }, [selectedTime])
+  
   return (
     <>
       {/* <AnimateFade> */}
@@ -29,7 +40,7 @@ export default function SoloPage() {
           <div className="pt-5 flex flex-row justify-evenly">
             <div>
               {/* Theme Options */}
-              <h3>Difficulty:</h3>
+              <h3 className="">Difficulty:</h3>
               <div>
                 {difficultyOptions.map((option) => (
                   <label key={option}>
@@ -62,8 +73,7 @@ export default function SoloPage() {
                       checked={selectedTime === option}
                       onChange={(e) => {
                         setSelectedTime(e.target.value);
-                        dispatch({ type: "setTime", payload: e.target.value });
-                        dispatch({ type: "setTime", payload: e.target.value });
+                        // dispatch({ type: "setTime", payload: e.target.value });
                       }}
                       className="mx-2"
                     />
@@ -75,7 +85,7 @@ export default function SoloPage() {
           </div>
           <div className="layout flex flex-col items-center pt-36 text-center relative">
             {/* <Box /> */}
-            <TypingArea />
+            <TypingArea time={selectedTime} diff={selectedDifficulty}/>
           </div>
         </section>
         <ToastContainer />

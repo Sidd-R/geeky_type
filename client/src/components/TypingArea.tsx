@@ -7,8 +7,9 @@ import TypingInput from '@/components/TypingInput';
 // import Tooltip from '@/components/Tooltip';
 
 import { usePreferenceContext } from '@/context';
+import { number } from 'yup';
 
-export default function TypingArea() {
+export default function TypingArea(props: {time:string,diff:string}) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const _ = require('lodash');
 
@@ -34,7 +35,7 @@ export default function TypingArea() {
   }, [isOpen]);
 
   useEffect(() => {
-    setList(shuffleList(type));
+    setList(shuffleList(props.diff));
   }, [type]);
 
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -42,11 +43,11 @@ export default function TypingArea() {
 
   return (
     <>
-      <TypingInput ref={inputRef} text={list.join(' ')} time={time} />
+      <TypingInput ref={inputRef} text={list.join(' ')} time={time == "15" || time == "30" || time == "45" || time == "60"?time:props.time} />
       <button
         onClick={() => {
           inputRef.current.focus();
-          setList(shuffleList(type));
+          setList(shuffleList(props.diff));
         }}
         ref={buttonRef}
         tabIndex={2}

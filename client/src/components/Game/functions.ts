@@ -7,11 +7,11 @@ const _ = require('lodash');
 
 export const shuffleList = (type: string) => {
   switch (type) {
-    case 'words':
+    case '1':
       return _.shuffle(words).slice(0, 150);
-    case 'numbers':
+    case '3':
       return _.shuffle(numbers).slice(0, 50);
-    case 'sentences':
+    case '2':
       // eslint-disable-next-line no-case-declarations
       let sentencesArray = _.shuffle(sentences);
       sentencesArray = sentencesArray.slice(0, 12);

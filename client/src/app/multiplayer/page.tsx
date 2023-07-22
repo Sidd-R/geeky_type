@@ -21,7 +21,6 @@ import { useRoomContext } from '@/room';
 export default function MultiplayerPage() {
   const {
     room: { socket, mode },
-    dispatch,
     resetTime,
   } = useRoomContext();
 
@@ -32,7 +31,7 @@ export default function MultiplayerPage() {
 
   const joinRandomRoom = () => {
     setIsJoiningRoom(true)    
-    dispatch({type: 'SET_USER_ID',payload:socket.id})
+    // dispatch({type: 'SET_USER_ID',payload:socket.id})
     router.push('/multiplayer/start')
 
   }
@@ -53,7 +52,6 @@ export default function MultiplayerPage() {
 
   return (
     <AnimateFade>
-      <Seo title='Enter Room Code' />
 
       <main>
         <section>

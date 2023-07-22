@@ -22,7 +22,7 @@ export default function page() {
   const router = useRouter();
 
   React.useEffect(() => {
-
+    dispatch({type: 'SET_USER_ID',payload:socket.id})
     if (user.id) {
       socket.emit('joinRandomRoom', user,type,(words:[string,boolean,string,string,]) => {
         dispatch({ type: 'SET_TEXT', payload: words[0] });

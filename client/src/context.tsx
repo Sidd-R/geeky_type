@@ -45,7 +45,7 @@ export default function PreferenceProvider({
   const [preferences, dispatch] = useReducer(reducer, {
     theme: "light",
     isOpen: false,
-    type: 'words',
+    type: '2',
     time: '30',
   });
 

@@ -15,13 +15,17 @@ type TypingInputProps = {
 } & React.ComponentPropsWithRef<"input">;
 
 const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
-  ({ text, time }, ref) => {
+  ({ text,time }, ref) => {
+    
+    const {
+      preferences: { isOpen },
+    } = usePreferenceContext();
     const [duration, setDuration] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
     const letterElements = useRef<HTMLDivElement>(null);
     const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
     const [realTimeWPM, setRealTimeWPM] = useState(0);
-
+    // let time = "15"
     const {
       states: {
         charsState,
@@ -37,10 +41,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     const [margin, setMargin] = useState(0);
     const [value, setValue] = useState("");
-
-    const {
-      preferences: { isOpen },
-    } = usePreferenceContext();
 
     const pos = useMemo(() => {
       if (currIndex !== -1 && letterElements.current) {
