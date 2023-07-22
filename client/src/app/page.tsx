@@ -213,7 +213,8 @@ export default function HomePage() {
                             {data.score} WPM
                           </span>
                         </td>
-                      </tr>)
+                      </tr>); 
+                      else return " " 
                       }
                     )
                     }
