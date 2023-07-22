@@ -7,6 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { CgSpinner } from 'react-icons/cg';
 import { FaArrowRight } from 'react-icons/fa';
 import { RiTeamFill } from 'react-icons/ri';
+import { usePreferenceContext } from '@/context';
 // import { toast } from 'react-toastify';
 // import * as yup from 'yup';
 
@@ -75,6 +76,12 @@ export default function MultiplayerPage() {
   const joinUsingCode = () => {
     setIsJoiningRoom(true)
   }
+  const difficultyOptions = ["1", "2", "3"];
+  const {
+    preferences: { theme, type, time },
+    dispatch,
+  } = usePreferenceContext();
+  const [selectedDifficulty, setSelectedDifficulty] = useState(type);
 
 
   // useEffect(() => {
@@ -126,6 +133,31 @@ export default function MultiplayerPage() {
             <div className='flex w-full flex-col gap-4'>
               <RiTeamFill className='self-center text-[5rem] text-orange-400' />
               <h1 className='mb-4  text-bg'>multiplayer mode</h1>
+              <div className="pt-5 flex flex-row justify-center">
+            <div>
+              {/* Theme Options */}
+              <h3>Difficulty:</h3>
+              <div>
+                {difficultyOptions.map((option) => (
+                  <label key={option}>
+                    <input
+                      type="radio"
+                      value={option}
+                      checked={selectedDifficulty === option}
+                      onChange={(e) => {
+                        setSelectedDifficulty(e.target.value);
+                        if (selectedDifficulty !== "") {
+                          dispatch({ type: "setType", payload: selectedDifficulty });
+                        }
+                      }}
+                      className="mx-2"
+                    />
+                    {option}
+                  </label>
+                ))}
+              </div>
+            </div>
+            </div>
               {/* <FormProvider {...methods}> */}
                 {/* <form onSubmit={onSubmit}> */}
                 <div className='flex items-center justify-center space-x-4 '>
