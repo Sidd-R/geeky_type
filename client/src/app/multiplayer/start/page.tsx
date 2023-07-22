@@ -4,7 +4,6 @@ import * as React from 'react';
 
 import AnimateFade from '@/components/Layout/AnimateFade';
 import Multiplayer from '@/components/Multiplayer/Multiplayer';
-import Seo from '@/components/Seo';
 import { useRoomContext } from '@/room';
 import { Player } from '@/types';
 import { usePreferenceContext } from '@/context';
@@ -67,8 +66,6 @@ export default function MultiplayerStart() {
 
   return (
     <AnimateFade>
-      <Seo title='Multiplayer mode' />
-
       <main>
         <section>
           <div className='layout flex flex-col items-center pt-28 text-center'>

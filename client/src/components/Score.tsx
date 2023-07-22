@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
-import {ChartOptions, Chart, CategoryScale,LinearScale,LineElement, PointElement, LineController, Tooltip} from "chart.js";
+import {ChartOptions, Chart, CategoryScale,LinearScale,LineElement, PointElement, LineController, Tooltip, ChartData} from "chart.js";
 
 interface TestData {
     testNo: number,
@@ -33,7 +33,7 @@ const Score: React.FC<Scoreprops> = ({ testData }) => {
       : [...testData.slice(startIndex), ...testData.slice(0, endIndex)];
 
 
-  const chartData = {
+  const chartData: ChartData<'line'> = {
     labels: slicedTestData.map((test) => `Test ${test.testNo}`),
     datasets: [
       {
@@ -49,7 +49,7 @@ const Score: React.FC<Scoreprops> = ({ testData }) => {
     ],
   };
 
-  const chartOptions: ChartOptions = {
+  const chartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -63,8 +63,9 @@ const Score: React.FC<Scoreprops> = ({ testData }) => {
       y: {
         grid: {
           color: "#EAEAEA",
-          borderColor: "#EAEAEA",
-          borderWidth: 1,
+          // borderColor: "#EAEAEA",
+          // borderWidth: 1,
+          
         },
         min: 0,
         max: 100,
