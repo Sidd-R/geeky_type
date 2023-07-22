@@ -8,7 +8,7 @@ export default function Code() {
 
   return (
     <span
-      // onClick={() =>
+      // onClick={() =>' 
         // navigator.clipboard.writeText(query?.id as string).then(() =>
         //   toast.success('Copied successfully!', {
         //     position: toast.POSITION.TOP_CENTER,

@@ -197,15 +197,15 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
               className
             )}
           ></div>
-          <span className='absolute left-0 -top-[4rem] flex items-center gap-2 text-4xl text-fg/80'>
-            <span className='inline-block w-20 rounded-sm text-fg/80 px-1 py-1 text-right '>
+          <span className='absolute left-0 -top-[4rem] flex items-center gap-2 text-4xl text-orange-300 '>
+            <span className='inline-block w-20 rounded-sm text-orange-300 px-1 py-1 text-right '>
               {currIndex + 1}
             </span>{''}
             /{' '}
             {!text.length ? (
               <div className='flex flex-col gap-1'>
-                <span className='inline-block h-3 w-12 animate-pulse rounded-lg bg-fg/50'></span>
-                <span className='inline-block h-3 w-16 animate-pulse rounded-lg bg-fg/50'></span>
+                <span className='inline-block h-3 w-12 animate-pulse rounded-lg bg-orange-300'></span>
+                <span className='inline-block h-3 w-16 animate-pulse rounded-lg bg-orange-300'></span>
               </div>
             ) : (
               text.length
@@ -271,7 +271,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
               <span
                 className={clsx(
                   'absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base  transition-all duration-200 opacity-0',
-                  { 'text-fg opacity-100 ': !isFocused }
+                  { 'text-orange-400 opacity-100 ': !isFocused }
                 )}
               >
                 Click
@@ -288,9 +288,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                 {' '}
                 {timeBeforeRestart && !winner
                   ? `Starting in ${timeBeforeRestart}`
-                  // : isOwner
-                  // ? 'Waiting for you to start the game'
-                  : 'Waiting for other players to join'}
+                  : ''}
               </span>
             )}
             <div

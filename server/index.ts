@@ -7,7 +7,7 @@ import crypto from 'crypto'
 import './Room'
 import { generateWords } from './generateWords'
 import { PlayerState, RoomState,Player } from './types'
-import { endGameHander, joinRoomHander, updateRoomHandler } from './roomUpdate'
+import { endGameHander, updateRoomHandler } from './publicRoomHandlers'
 const app: Express = express()
 const serverHttp = http.createServer(app);
 app.use(cors())
@@ -18,8 +18,8 @@ class Room{
   startTime: number = 0
   roomId: string
   words: string
-  roomDif: 1|2|3
-  constructor(id:string,words: string,roomDif: 1|2|3){
+  roomDif: "1"|"2"|"3"
+  constructor(id:string,words: string,roomDif: "1"|"2"|"3"){
     this.roomId = id
     this.startTime = new Date().getTime()
     this.words = words
@@ -32,19 +32,6 @@ class Room{
 
 }
 
-// class Player{
-//   isPlaying: boolean = false
-// 	isReady: boolean = false
-//   score: number = 0
-//   finishTime: number = 0
-//   accuracy: number = 0
-//   id: string 
-//   room: Room
-//   constructor(id: string, room: Room) {
-//     this.id = id
-//     this.room = room
-//   }
-// }
 export const playerRooms: PlayerState = {};
 export const rooms: RoomState = {};
 
@@ -61,7 +48,7 @@ const io = new Server(serverHttp,{cors: {
 
 export var publicIO = io.of('/public') 
 
-var privateIO = io.of('/private')
+export var privateIO = io.of('/private')
 
 
 dotenv.config()
@@ -69,7 +56,7 @@ dotenv.config()
 
 var onlineUserCount = 0;
 var playerInRoom = new Map<Player,Room>()
-var currentRoom:Array<Room> = [new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '),1),new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '),2),new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '),3)]
+var currentRoom:Array<Room> = [new Room(crypto.randomBytes(8).toString("hex"),generateWords("1").join(' '),"1"),new Room(crypto.randomBytes(8).toString("hex"),generateWords("2").join(' '),"2"),new Room(crypto.randomBytes(8).toString("hex"),generateWords("3").join(' '),"3")]
 
 
 publicIO.on('connection',(socket:Socket) => {
@@ -79,8 +66,8 @@ publicIO.on('connection',(socket:Socket) => {
   
   
   socket.on('joinRandomRoom',(user,diff,sendWords) => {
-      console.log(user);
-    let curRoomIndex = diff-1
+      // console.log(user);
+    let curRoomIndex = parseInt(diff)-1
     var player:Player = user
     
 
@@ -89,7 +76,7 @@ publicIO.on('connection',(socket:Socket) => {
 
     socket.join(currentRoom[curRoomIndex].roomId);
 
-    console.log("player with id:",player.id,"joined room with id:",currentRoom[curRoomIndex].roomId);
+    console.log("player with id:",player.id,"diff: ",diff," \njoined room with id:",currentRoom[curRoomIndex].roomId,"and diff: ", curRoomIndex);
     
     rooms[currentRoom[curRoomIndex].roomId] = {
       players: [...currentRoom[curRoomIndex].players,user],
@@ -104,7 +91,7 @@ publicIO.on('connection',(socket:Socket) => {
 
       currentRoom[curRoomIndex].startTime = new Date().getTime();
       publicIO.in(currentRoom[curRoomIndex].roomId).emit("start game");
-      currentRoom[curRoomIndex] = new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '),currentRoom[curRoomIndex].roomDif);
+      currentRoom[curRoomIndex] = new Room(crypto.randomBytes(8).toString("hex"),generateWords(diff).join(' '),currentRoom[curRoomIndex].roomDif);
       
       // socket.emit("words generated", currentRoom[curRoomIndex].words)
     } else {
@@ -114,7 +101,7 @@ publicIO.on('connection',(socket:Socket) => {
   })
 
 
-  joinRoomHander(socket)
+  // joinRoomHander(socket)
   updateRoomHandler(socket)
   endGameHander(socket)
 
@@ -130,5 +117,3 @@ app.get('/', (req: Request, res: Response) => res.send('Hello World!'))
 
 
 serverHttp.listen(8080, () => console.log(`Example app listening on port 8080!`))
-
-

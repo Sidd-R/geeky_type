@@ -48,7 +48,17 @@ export default function MultiplayerPage() {
     preferences: { theme, type, time },
     dispatch,
   } = usePreferenceContext();
+
   const [selectedDifficulty, setSelectedDifficulty] = useState(type);
+
+  useEffect(()=> {
+    dispatch({type:"setType",payload:selectedDifficulty})
+  },[])
+
+  useEffect(() => {
+    dispatch({type:"setType",payload:selectedDifficulty})
+  }, [selectedDifficulty])
+  
 
   return (
     <AnimateFade>

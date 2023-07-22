@@ -47,23 +47,20 @@ export default function Players() {
           >
             <div className='flex w-full items-center justify-between'>
               <span className='flex items-center space-x-1'>
-                {winner === player.id && <FaCrown className='mr-1 text-fg' />}
-                <span className='text-fg'>You </span>
+                {winner === player.id && <FaCrown className='mr-1 text-orange-500' />}
+                <span className='text-orange-400'>You </span>
                 <span className='text-xs'>
                   (
                   {isPlaying
-                    ? 'in game'
-                    : player.isOwner
-                    ? 'owner'
-                    : 'waiting for owner'}
+                    ? 'in game':'waiting'}
                   )
                 </span>
               </span>
-              <span className='text-sm text-fg'>{player.status.wpm} wpm</span>
+              <span className='text-sm text-orange-400'>{player.status.wpm} wpm</span>
             </div>
             <div className='h-2 w-full min-w-[230px] overflow-hidden rounded-lg bg-hl/40 xs:min-w-[350px]'>
               <div
-                className='h-full rounded-lg bg-fg transition-all duration-500'
+                className={`h-full rounded-lg  transition-all duration-500  ${winner == player.id?'bg-green-400':'bg-orange-600'}`}
                 style={{
                   width: `${player.status.progress}%`,
                 }}
@@ -78,26 +75,23 @@ export default function Players() {
             <div className='flex w-full items-center justify-between'>
               <span className='flex items-center space-x-1'>
                 {winner === player.id && (
-                  <FaCrown className='mr-1 text-fg/50' />
+                  <FaCrown className='mr-1 text-orange-500' />
                 )}
-                <span className='text-fg/50'>{player.username} </span>
+                <span className='text-orange-400'>{player.username} </span>
                 <span className='text-xs'>
                   (
                   {isPlaying
-                    ? 'in game'
-                    : player.isOwner
-                    ? 'owner'
-                    : 'waiting for owner'}
+                    ? 'in game':null}
                   )
                 </span>
               </span>
-              <span className='text-sm text-fg/50'>
+              <span className='text-sm text-orange-400'>
                 {player.status.wpm} wpm
               </span>
             </div>
             <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/20 xs:min-w-[350px]'>
               <div
-                className={'h-full rounded-lg  transition-all duration-500'+''}
+                className={`h-full rounded-lg  transition-all duration-500 ${winner == player.id?'bg-green-400':'bg-orange-400'}`}
                 style={{
                   width: `${player.status.progress}%`,
                 }}

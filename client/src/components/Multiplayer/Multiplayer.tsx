@@ -5,6 +5,8 @@ import TypingInput from '@/components/Multiplayer/TypingInput';
 
 import { usePreferenceContext } from '@/context';
 import { useRoomContext } from '@/room';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Multiplayer() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -51,6 +53,8 @@ export default function Multiplayer() {
   const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const buttonRef = React.useRef() as React.MutableRefObject<HTMLButtonElement>;
 
+  const router = useRouter()
+
   return (
     <>
       {/* Multiplayer */}
@@ -61,21 +65,21 @@ export default function Multiplayer() {
           ref={buttonRef}
           disabled={isPlaying || !isOwner || timeBeforeRestart > 0}
           tabIndex={2}
-          onClick={() => id && roomId && socket.emit('start game', roomId)}
+          onClick={() => {if (winner) {router.push('/multiplayer')}}}
           className={clsx(
-            'outline-solid mb-8 transform rounded-lg px-3 py-2 font-primary text-bg shadow-b shadow-fg/50 outline-offset-[6px] transition-all duration-200 focus:outline-dashed focus:outline-[3px] active:translate-y-[4px] active:shadow-none',
+            'outline-solid mb-8 transform rounded-lg px-3 py-2 font-primary bg-orange-300 text-bg shadow-b shadow-orange-400 outline-offset-[6px] transition-all duration-200  focus:outline-dashed focus:outline-[3px] active:translate-y-[4px] active:shadow-none',
             [
               isPlaying || !isOwner || timeBeforeRestart > 0
-                ? 'active:bg-fg-50 bg-fg/70 hover:bg-fg/60 focus:outline-fg/30'
-                : 'active:bg-fg-80 bg-fg hover:bg-fg/90 focus:outline-fg/50 ',
+                ? 'active:bg-fg-50 bg-fg/70 hover:bg-orange-500 focus:outline-orange-300'
+                : 'active:bg-fg-80 bg-fg hover:bg-orange-500 focus:outline-orange-400 ',
             ],
             [
-              (isPlaying || !isOwner || timeBeforeRestart > 0) &&
+              (!winner ) &&
                 'cursor-not-allowed',
             ]
           )}
         >
-          {winner ? 'Restart' : isPlaying ? 'In Game' : 'Start'}
+          {winner ? <Link href={'/multiplayer'}>Return</Link>  : isPlaying ? 'In Game' : 'waiting'}
         </button>
       </div>
     </>

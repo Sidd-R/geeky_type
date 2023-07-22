@@ -1334,17 +1334,17 @@ const sentences = [
 
 const _ = require("lodash");
 
-export const generateWords = (type: string) => {
+export const generateWords = (type: "1"|"2"|"3") => {
 	switch (type) {
-		// case "words":
-		// 	let wordsArray = _.shuffle(words);
-		// 	wordsArray = wordsArray.slice(0, 30);
-		// 	return wordsArray;
-		case "numbers":
+		case "1":
+			let wordsArray = _.shuffle(words);
+			wordsArray = wordsArray.slice(0, 10);
+			return wordsArray;
+		case "3":
 			let numbersArray = _.shuffle(numbers);
 			numbersArray = numbersArray.slice(0, 15);
 			return numbersArray;
-		case "sentences":
+		case "2":
 			let sentencesArray = _.shuffle(sentences);
 			sentencesArray = sentencesArray.slice(0, 2);
 			return sentencesArray;
