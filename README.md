@@ -19,7 +19,6 @@
   * [Installation](#installation)
 * [Contributing](#contributing)
 * [Authors](#authors)
-* [Acknowledgements](#acknowledgements)
 
 ## Built With
 
