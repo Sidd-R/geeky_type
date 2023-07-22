@@ -1,5 +1,5 @@
-const asyncHandler = require("express-async-handler");
-const Test = require("../models/testModel");
+import asyncHandler from "express-async-handler";
+import Test from "../models/testModel";
 const User = require("../models/userModel");
 
 const getAllTests = asyncHandler(async (req, res) => {
@@ -30,7 +30,7 @@ const allTests = asyncHandler(async (req, res) => {
     const tests = await Test.find();
 
     const testsWithUserName = await Promise.all(
-      tests.map(async (test) => {
+      tests.map(async (test:any) => {
         const user = await User.findById(test.userId);
         const userName = user ? user.name : "Unknown User";
         const userEmail = user ? user.email : "Unknown User";
@@ -47,7 +47,7 @@ const allTests = asyncHandler(async (req, res) => {
       noOfTests: avgScoreResult.length ? avgScoreResult[0].count : 0,
       testsWithUserName,
     });
-  } catch (error) {
+  } catch (error:any) {
     res.status(500).json({ message: "Failed to fetch test data." });
     console.log('====================================');
     console.log(error.message);
@@ -89,8 +89,8 @@ const newTest = asyncHandler(async (req, res) => {
   res.status(200).json(test);
 });
 
-module.exports = {
+export default {
   getAllTests,
   newTest,
   allTests
-};
+}

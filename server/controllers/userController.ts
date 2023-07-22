@@ -4,8 +4,9 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const Test = require("../models/testModel");
 const mongoose = require("mongoose");
+import {Request,Response} from 'express'
 
-const registerUser = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req:Request, res:Response) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -51,7 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-const loginUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req:Request, res:Response) => {
   const { email, password } = req.body;
 
   // Check for user email
@@ -73,14 +74,14 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-const getMe = asyncHandler(async (req, res) => {
+const getMe = asyncHandler(async (req:Request, res:Response) => {
   const { id } = req.query;
 
   const user = await User.findById(id);
 
   if (user) {
     const allTestData = await Test.find({ userId: id });
-    const sortedTestData = allTestData.sort((a, b) => b.testNo - a.testNo);
+    const sortedTestData = allTestData.sort((a:any, b:any) => b.testNo - a.testNo);
     
     const top20RecentTestData = sortedTestData.slice(0, 20);
 
@@ -99,7 +100,7 @@ const getMe = asyncHandler(async (req, res) => {
   }
 });
 
-const generateToken = (id) => {
+const generateToken = (id:string) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });

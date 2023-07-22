@@ -8,9 +8,27 @@ import './Room'
 import { generateWords } from './generateWords'
 import { PlayerState, RoomState,Player } from './types'
 import { endGameHander, updateRoomHandler } from './publicRoomHandlers'
+// import {errorHandler} from './middleware/errorMiddleware.js'
+import {userRoutes} from './routes/userRoutes'
+import {testRoutes} from './routes/testRoutes'
+import connectDB from "./config/db";
+
+dotenv.config()
+
+const PORT = process.env.PORT || 8080;
+
+connectDB();
+
 const app: Express = express()
 const serverHttp = http.createServer(app);
+
 app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+app.use("/api/user",userRoutes)
+app.use("/api/test",testRoutes)
+
+// app.use(errorHandler)
 
 class Room{
   players: Array<Player> = []
@@ -51,7 +69,6 @@ export var publicIO = io.of('/public')
 export var privateIO = io.of('/private')
 
 
-dotenv.config()
 
 
 var onlineUserCount = 0;
@@ -116,4 +133,4 @@ privateIO.on('connection',(socket) => {
 app.get('/', (req: Request, res: Response) => res.send('Hello World!'))
 
 
-serverHttp.listen(8080, () => console.log(`Example app listening on port 8080!`))
+serverHttp.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
