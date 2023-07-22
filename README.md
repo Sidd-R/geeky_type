@@ -76,18 +76,9 @@ Contributions are what make the open source community such an amazing place to b
 * Create individual PR for each suggestion.
 * Please also read through the [Code Of Conduct](https://github.com/Sidd-R/typing_app/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
 
-### Creating A Pull Request
-
-
 
 ## Authors
 
-* **Siddhant Rao** - *TE, SPIT* - [Siddhant Rao](https://github.com/Sidd-R) - *Multiplayer Mode*
-* **Satyam Jaiswal** - *TE, SPIT* - [Satyam Jaiswal](https://github.com/1SatyamJaiswal) - *Frontend*
-* **Vikas Rajpurohit** - *TE, SPIT* - [Vikas Rajpurohit](https://github.com/Vikas-Rajpurohit) - *Backend and Single Player Mode*
-
-## Acknowledgements
-
-* []()
-* [](Best-README-Template)
-* []()
+* **Siddhant Rao** - [Siddhant Rao](https://github.com/Sidd-R)
+* **Satyam Jaiswal**- [Satyam Jaiswal](https://github.com/1SatyamJaiswal)
+* **Vikas Rajpurohit** - [Vikas Rajpurohit](https://github.com/Vikas-Rajpurohit)
