@@ -85,7 +85,7 @@ export default function HomePage() {
         </section>
         <section className="mb-10">
           <div className="flex flex-col items-center gap-8 pt-4 lg:pt-8 text-center">
-            <div className="glassmorphism mt-5 px-20 flex flex-row justify-evenly gap-32">
+            <div className="glassmorphism mt-5 w-[90%] flex flex-row justify-evenly gap-4">
               <div>
                 <h4 className="text-gray-800">Games Played</h4>
                 <p className="text-gray-800">{leaderBoard.noOfTests}</p>
