@@ -9,7 +9,7 @@ import { useRoomContext } from '@/room';
 import { Player } from '@/types';
 import { usePreferenceContext } from '@/context';
 
-export default function page() {
+export default function MultiplayerStart() {
   
   const {
     room: { socket, user },

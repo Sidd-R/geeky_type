@@ -2,13 +2,8 @@ import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BsCursorFill } from 'react-icons/bs';
 import useTyping from 'react-typing-game-hook';
-
-import { usePreferenceContext } from '@/context';
 import { useRoomContext } from '@/room';
-
 import Players from './Players';
-import Code from './RoomCode';
-// import ChatBox from '../Chat/ChatBox';
 
 type TypingInputProps = React.ComponentPropsWithRef<'input'>;
 
@@ -382,4 +377,5 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
   }
 );
 
+TypingInput.displayName = 'TypingInput';
 export default TypingInput;

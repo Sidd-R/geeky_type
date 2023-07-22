@@ -333,5 +333,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     );
   }
 );
+TypingInput.displayName = 'TypingInput';
 
 export default TypingInput;

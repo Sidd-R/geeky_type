@@ -18,13 +18,7 @@ import { useRoomContext } from "@/room";
 export default function HomePage() {
   const router = useRouter();
 
-  const { dispatch } = useRoomContext();
-
-  const methods = useForm<{ code: string }>({
-    mode: "onTouched",
-  });
-
-  const [leaderBoard, setLeaderBoard] = useState({
+  const [leaderBoard, setLeaderBoard] = useState<{avgScore:number,noOfTests:number,testsWithUserName:Array<{userName:string,userEmail:string,testNo:string,score:string}>}>({
     avgScore: 0,
     noOfTests: 0,
     testsWithUserName: [],

@@ -15,7 +15,6 @@ import { usePreferenceContext } from '@/context';
 
 import Button from '@/components/Button/Button';
 import AnimateFade from '@/components/Layout/AnimateFade';
-import Seo from '@/components/Seo';
 import { useRoomContext } from '@/room';
 
 export default function MultiplayerPage() {

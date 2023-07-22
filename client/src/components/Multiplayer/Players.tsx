@@ -4,7 +4,6 @@ import { FaCrown } from 'react-icons/fa';
 
 import { useRoomContext } from '@/room';
 
-import Skeleton from './Skeleton';
 import { Player } from '@/types';
 
 export default function Players() {
