@@ -20,13 +20,13 @@ const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  const {preferences:{theme},dispatch} = usePreferenceContext()
+  const {preferences:{theme,type,time},dispatch} = usePreferenceContext()
  
   const navigation = [
     { name: "Home", href: "/", current: path == "/" },
     { name: "Solo", href: "/single", current: path == "/single" },
     { name: "Multiplayer", href: "/multiplayer", current: path == "/multiplayer" },
-    { name: "About", href: "/about", current: path == "/about" },
+    // { name: "About", href: "/about", current: path == "/about" },
   ];
 
   useEffect(() => {

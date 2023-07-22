@@ -7,6 +7,8 @@ export type PreferenceState = {
 
 export type Action =
   | { type: 'setTheme'; payload: string }
+  | { type: 'setType'; payload: string }
+  | { type: 'setTime'; payload: string }
   // | { type: 'SET_ZEN_MODE'; payload: boolean }
   // | { type: 'TOGGLE_COMMAND_PALETTE' };
 

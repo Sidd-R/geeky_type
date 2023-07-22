@@ -97,7 +97,7 @@ export default function Players() {
             </div>
             <div className='h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-hl/20 xs:min-w-[350px]'>
               <div
-                className='h-full rounded-lg bg-fg/60 transition-all duration-500'
+                className={'h-full rounded-lg  transition-all duration-500'+''}
                 style={{
                   width: `${player.status.progress}%`,
                 }}
