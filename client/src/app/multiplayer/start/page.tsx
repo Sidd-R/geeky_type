@@ -1,16 +1,13 @@
 'use client'
 import { useRouter, useParams } from 'next/navigation';
 import * as React from 'react';
-// import { toast } from 'react-toastify';
 
-// import Kbd from '@/components/Kbd';
 import AnimateFade from '@/components/Layout/AnimateFade';
 import Multiplayer from '@/components/Multiplayer/Multiplayer';
-// import Seo from '@/components/Seo';
-
-// import { useChatContext } from '@/context/Chat/ChatContext';
+import Seo from '@/components/Seo';
 import { useRoomContext } from '@/room';
 import { Player } from '@/types';
+import { usePreferenceContext } from '@/context';
 
 export default function page() {
   
@@ -20,14 +17,14 @@ export default function page() {
     resetTime,
   } = useRoomContext();
 
-  // const { dispatch: chatDispatch } = useChatContext();
+  const {preferences:{type,time}} = usePreferenceContext();
 
   const router = useRouter();
 
   React.useEffect(() => {
 
     if (user.id) {
-      socket.emit('joinRandomRoom', user,(words:[string,boolean,string,string,]) => {
+      socket.emit('joinRandomRoom', user,type,(words:[string,boolean,string,string,]) => {
         dispatch({ type: 'SET_TEXT', payload: words[0] });
         dispatch({type: 'SET_ROOM_ID',payload:words[2]})
         dispatch({type:'SET_USER_ID',payload:words[3]})
@@ -37,9 +34,6 @@ export default function page() {
         }
       }
       )
-      // dispatch({ type: 'SET_ROOM_ID', payload: router?.query?.id as string });
-      // chatDispatch({ type: 'CLEAR_ROOM_CHAT' });
-
       // socket.off('room update').on('room update', (players: Player[]) => {
       //   console.log("got an update",players);
         
@@ -67,36 +61,13 @@ export default function page() {
         dispatch({ type: 'SET_WINNER', payload: playerId });
         dispatch({ type: 'SET_IS_READY', payload: false });
       });
-
-      // socket.off('room invalid').on('room invalid', () => {
-      //   // toast.error("Room doesn't exist.", {
-      //   //   position: toast.POSITION.TOP_CENTER,
-      //   //   toastId: "Room doesn't exist.",
-      //   //   autoClose: 3000,
-      //   // });
-      //   router.push('/multiplayer');
-      // });
-
-      // socket.off('room in game').on('room in game', () => {
-      //   toast.error('Room is currently in game.', {
-      //     position: toast.POSITION.TOP_CENTER,
-      //     toastId: 'Room is currently in game.',
-      //     autoClose: 3000,
-      //   });
-      //   router.push('/multiplayer');
-      // });
-
-      // socket.off('words generated').on('words generated', (text: string) => {
-      //   dispatch({ type: 'SET_TEXT', payload: text });
-      // });
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <AnimateFade>
-      {/* <Seo title='Monkeytype Clone' /> */}
+      <Seo title='Multiplayer mode' />
 
       <main>
         <section>

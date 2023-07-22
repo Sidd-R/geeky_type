@@ -22,10 +22,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     const [timeLeft, setTimeLeft] = useState(() => parseInt(time));
     const [realTimeWPM, setRealTimeWPM] = useState(0);
 
-    // const { user } = useProfile();
-
-    // const { createLeaderboardData } = useLeaderboard();
-
     const {
       states: {
         charsState,
@@ -79,7 +75,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     realTimeWPMRef.current = realTimeWPM;
 
     useEffect(() => {
-      let timerInterval : NodeJS.Timeout | null = null;
+      let timerInterval : NodeJS.Timeout;
       if (startTime) {
         timerInterval = setInterval(() => {
           setTimeLeft((timeLeft) => {

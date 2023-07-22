@@ -18,11 +18,12 @@ class Room{
   startTime: number = 0
   roomId: string
   words: string
-
-  constructor(id:string,words: string){
+  roomDif: 1|2|3
+  constructor(id:string,words: string,roomDif: 1|2|3){
     this.roomId = id
     this.startTime = new Date().getTime()
     this.words = words
+    this.roomDif = roomDif
   }
 
   addPlayer(player:Player) {
@@ -68,7 +69,7 @@ dotenv.config()
 
 var onlineUserCount = 0;
 var playerInRoom = new Map<Player,Room>()
-var currentRoom = new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '))
+var currentRoom:Array<Room> = [new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '),1),new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '),2),new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '),3)]
 
 
 publicIO.on('connection',(socket:Socket) => {
@@ -77,44 +78,37 @@ publicIO.on('connection',(socket:Socket) => {
   console.log("Online players: ",onlineUserCount);
   
   
-  socket.on('joinRandomRoom',(user,sendWords) => {
+  socket.on('joinRandomRoom',(user,diff,sendWords) => {
       console.log(user);
-      
+    let curRoomIndex = diff-1
     var player:Player = user
     
 
-    playerInRoom.set(player,currentRoom)
-    currentRoom.addPlayer(player);
+    // playerInRoom.set(player,currentRoom)
+    currentRoom[curRoomIndex].addPlayer(player);
 
-    socket.join(currentRoom.roomId);
+    socket.join(currentRoom[curRoomIndex].roomId);
 
-    console.log("player with id:",player.id,"joined room with id:",currentRoom.roomId);
-    // let tempSet = new Set(currentRoom.players)
+    console.log("player with id:",player.id,"joined room with id:",currentRoom[curRoomIndex].roomId);
     
-    // currentRoom.players = currentRoom.players.filter(player => { 
-    //   if (tempSet.has(player)) {
-    //       tempSet.delete(player)
-    //       return true
-    //   } else return false
-    // })
-    rooms[currentRoom.roomId] = {
-      players: [...currentRoom.players,user],
-      toType: currentRoom.words,
+    rooms[currentRoom[curRoomIndex].roomId] = {
+      players: [...currentRoom[curRoomIndex].players,user],
+      toType: currentRoom[curRoomIndex].words,
       inGame: false,
       winner: null,
     };
-    if (currentRoom.players.length >= 2) {
-      sendWords([currentRoom.words,true,currentRoom.roomId,player.id]);
-      rooms[currentRoom.roomId].inGame = true;
-      socket.in(currentRoom.roomId).emit("start game");
+    if (currentRoom[curRoomIndex].players.length >= 2) {
+      sendWords([currentRoom[curRoomIndex].words,true,currentRoom[curRoomIndex].roomId,player.id]);
+      rooms[currentRoom[curRoomIndex].roomId].inGame = true;
+      socket.in(currentRoom[curRoomIndex].roomId).emit("start game");
 
-      currentRoom.startTime = new Date().getTime();
-      publicIO.in(currentRoom.roomId).emit("start game");
-      currentRoom = new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '));
+      currentRoom[curRoomIndex].startTime = new Date().getTime();
+      publicIO.in(currentRoom[curRoomIndex].roomId).emit("start game");
+      currentRoom[curRoomIndex] = new Room(crypto.randomBytes(8).toString("hex"),generateWords("words").join(' '),currentRoom[curRoomIndex].roomDif);
       
-      // socket.emit("words generated", currentRoom.words)
+      // socket.emit("words generated", currentRoom[curRoomIndex].words)
     } else {
-      sendWords([currentRoom.words,false,currentRoom.roomId,player.id]);
+      sendWords([currentRoom[curRoomIndex].words,false,currentRoom[curRoomIndex].roomId,player.id]);
     }
  
   })
