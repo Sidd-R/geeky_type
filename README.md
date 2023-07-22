@@ -32,7 +32,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-* npm
+* npm or yarn
 
 
 ### Installation
@@ -47,34 +47,45 @@ cd client
 
 2. Install the required dependencies
 ```bash
-npm install
+npm install or yarn install
 ```
 
 3. Install the required dependencies in server.
 ```bash
+cd ..
+cd server
+npm install or yarn install
 cd backend
-npm install
+npm install or yarn install
 ```
 
 4. Set up the environment variables:
 ```bash
+Create a .env file and add the below lines and replace it appropriate details
 MONGODB_URI=your_mongodb_connection_string
 SECRET_KEY=your_secret_key_for_jwt
 ```
 Replace your_mongodb_connection_string with the connection string to your MongoDB database, and your_secret_key_for_jwt with a secure secret key for JWT token generation.
 
-5. Start the development server:
+5. Start the development server for backend:
 ```bash
-npm run dev
+cd server
+npm run dev or yarn dev
+new terminal:
+cd server/backend
+npm run server or yarn server
+```
+
+6. Start the development server for client:
+```bash
+cd client
+npm run dev or yarn dev
 ```
 
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 * If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/Sidd-R/typing_app/issues/new) to discuss it, or directly create a pull request after you edit the *README.md* file with necessary changes.
-* Please make sure you check your spelling and grammar.
-* Create individual PR for each suggestion.
-* Please also read through the [Code Of Conduct](https://github.com/Sidd-R/typing_app/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
 
 
 ## Authors
