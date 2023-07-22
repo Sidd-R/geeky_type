@@ -1,6 +1,6 @@
 <br/>
 <p align="center">
-  ![GeekyType Logo](./client/public/assets/images/logo.png)
+  
   <h3 align="center">GeekyType</h3>
 
   <p align="center">
