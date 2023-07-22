@@ -5,7 +5,19 @@ import Cookies from "js-cookie";
 import Score from "@/components/Score";
 
 const UserProfile = () => {
-  const [userData, setUserData] = useState({
+  type recentTestData = {
+    testNo:number,
+    score:number
+  }
+  type USERDATA = {
+    name: string,
+    email: string,
+    maxScore: number,
+    avgScore: number,
+    noOfTests: number,
+    top20RecentTestData: Array<recentTestData>
+  }
+  const [userData, setUserData] = useState<USERDATA>({
     name: "user",
     email: "user@example.com",
     maxScore: 0,
@@ -13,7 +25,9 @@ const UserProfile = () => {
     noOfTests: 0,
     top20RecentTestData: [],
   });
-  const [testData, setTestData] = useState([]);
+
+  
+  const [testData, setTestData] = useState<Array<{testNo:number,score:number}>>([]);
   useEffect(() => {
     const _id = Cookies.get("_id");
     if (!_id) {

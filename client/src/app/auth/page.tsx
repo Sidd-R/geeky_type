@@ -20,7 +20,7 @@ const AuthForm = () => {
     setIsLogin(!isLogin);
   };
 
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
     console.log("Logging in with email:", email, "and password:", password);
   
@@ -83,7 +83,7 @@ const AuthForm = () => {
     }
   };
   
-  const handleSignupSubmit = async (e) => {
+  const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(
       "Signing up with name:",
