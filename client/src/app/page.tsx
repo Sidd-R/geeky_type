@@ -11,6 +11,7 @@ import Input from "@/components/Input";
 // import Kbd from "@/components/Kbd";
 import AnimateFade from "@/components/Layout/AnimateFade";
 // import Seo from '@/components/Seo';
+import {useState, useEffect} from 'react';
 
 import { useRoomContext } from "@/room";
 
@@ -22,6 +23,26 @@ export default function HomePage() {
   const methods = useForm<{ code: string }>({
     mode: "onTouched",
   });
+
+  const [leaderBoard, setLeaderBoard] = useState({avgScore:0,noOfTests:0,testsWithUsername:[]});
+
+  useEffect(() => {
+    const apiUrl = "http://localhost:5000/api/test/all";
+    fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLeaderBoard(data);
+        console.log(leaderBoard);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   return (
     <AnimateFade>
@@ -63,20 +84,16 @@ export default function HomePage() {
                 }}
               ></iframe>
             </div> */}
-            <FormProvider {...methods}>
-              <Input
-                placeholder="enter your nickname"
-                autoComplete="off"
-                name="nickname"
-                id="nickname"
-                maxLength={20}
-                onBlur={(e) => {
-                  if (!e.target.value) return;
-                  dispatch({ type: "SET_NICKNAME", payload: e.target.value });
-                }}
-                className="text-center py-2 px-2 bg-slate-200"
-              />
-            </FormProvider>
+            <div className="glassmorphism mt-5 w-[90%] flex flex-row justify-evenly gap-4">
+            <div>
+                <h4 className="text-gray-800">Games Played</h4>
+                <p className="text-gray-800">{leaderBoard.noOfTests}</p>
+            </div>
+            <div>
+                <h4 className="text-gray-800">Avg Score</h4>
+                <p className="text-gray-800"> {leaderBoard.avgScore.toFixed(2)} WPM</p>
+            </div>
+          </div>
             <div className="flex flex-col items-center px-2 w-full lg:flex-row md:justify-around">
               <div className="max-w-sm my-5 p-5 rounded-md flex flex-row items-center prompt_card">
                 <Image

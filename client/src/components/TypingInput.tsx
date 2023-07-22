@@ -75,61 +75,64 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
       resetTyping();
     }, [text, time]);
 
+    const realTimeWPMRef = useRef(realTimeWPM);
+    realTimeWPMRef.current = realTimeWPM;
+
     useEffect(() => {
-      let timerInterval: NodeJS.Timeout | null = null;
-    
+      let timerInterval : NodeJS.Timeout | null = null;
       if (startTime) {
         timerInterval = setInterval(() => {
           setTimeLeft((timeLeft) => {
             if (timeLeft <= 1) {
-              clearInterval(timerInterval!); 
+              clearInterval(timerInterval);
               endTyping();
               const _id = Cookies.get("_id");
-              if(_id){
-                const apiUrl = "http://localhost:5000/api/test/new"; // Replace with your API endpoint URL
+              if (_id) {
+                const apiUrl = "http://localhost:5000/api/test/new";
 
-              fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  score: realTimeWPM,
-                  id: _id,
-                }),
-              })
-                .then((response) => {
-                  if (!response.ok) {
-                    throw new Error("API request failed");
-                  }
-                  return response.json();
+                fetch(apiUrl, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    score: realTimeWPMRef.current, // Use the ref value
+                    id: _id,
+                  }),
                 })
-                .then((data) => {
-                  toast.success("Game data saved successfully!", {
-                    position: "top-center",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
+                  .then((response) => {
+                    if (!response.ok) {
+                      throw new Error("API request failed");
+                    }
+                    return response.json();
+                  })
+                  .then((data) => {
+                    toast.success("Game data saved successfully!", {
+                      position: "top-center",
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                    });
+                  })
+                  .catch((error) => {
+                    // Handle API error here
                   });
-                })
-                .catch((error) => {
-                  // Handle API error here
-                });
               }
-              return 0; 
+              return 0;
+            } else {
+              return timeLeft - 1;
             }
-            return parseInt(time) - Math.floor((Date.now() - startTime) / 1000);
           });
         }, 1000);
       }
-    
+
       return () => {
-        clearInterval(timerInterval!); 
+        clearInterval(timerInterval);
       };
-    }, [startTime, phase, time, endTyping]);
+    }, [startTime, endTyping]);
     
 
     useEffect(() => {

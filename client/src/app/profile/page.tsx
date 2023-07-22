@@ -27,16 +27,16 @@ const UserProfile = () => {
       const data = await response.json();
 
       setUserData(data);
-      const transformedData = userData.top20RecentTestData.map((item) => ({
-        testNo: item.testNo,
-        score: item.score,
-      }));
-      setTestData(transformedData);
-      console.log(testData);
-      console.log(userData);
+      if (userData && userData.top20RecentTestData) {
+        const transformedData = userData.top20RecentTestData.map((item) => ({
+          testNo: item.testNo,
+          score: item.score,
+        }));
+        setTestData(transformedData);
+      }
     };
     fetchData();
-  }, []);
+  }, [userData]);
 
   return (
     <>
@@ -52,11 +52,11 @@ const UserProfile = () => {
             </div>
             <div>
                 <h4 className="text-gray-800">Max Score</h4>
-                <p>{userData.maxScore}</p>
+                <p>{userData.maxScore} WPM</p>
             </div>
             <div>
                 <h4 className="text-gray-800">Avg Score</h4>
-                <p>{userData.avgScore}</p>
+                <p>{userData.avgScore.toFixed(2)} WPM</p>
             </div>
           </div>
           <div className="mt-5">
