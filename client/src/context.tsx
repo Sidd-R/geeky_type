@@ -30,7 +30,7 @@ export default function PreferenceProvider({
     theme: "light",
     isOpen: false,
     type: 'words',
-    time: '15',
+    time: '30',
   });
 
   useEffect(() => {

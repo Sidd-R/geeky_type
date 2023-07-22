@@ -2,6 +2,7 @@
 import TypingArea from '@/components/TypingArea';
 import * as React from 'react';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import Box from '@/components/Game/Box';
 // import Kbd from '@/components/Kbd';
