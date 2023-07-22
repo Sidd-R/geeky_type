@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Score from "@/components/Score";
+import url from "@/url";
 
 const UserProfile = () => {
   type recentTestData = {
@@ -36,7 +37,7 @@ const UserProfile = () => {
     }
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:5000/api/user/me?id=` + _id
+        url+`api/user/me?id=` + _id
       );
       const data = await response.json();
 

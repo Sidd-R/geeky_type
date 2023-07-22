@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import {toast} from "react-toastify";
 
 import { usePreferenceContext } from "@/context";
+import url from "@/url";
 
 type TypingInputProps = {
   text: string;
@@ -84,7 +85,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
               endTyping();
               const _id = Cookies.get("_id");
               if (_id) {
-                const apiUrl = "http://localhost:5000/api/test/new";
+                const apiUrl = url+"api/test/new";
 
                 fetch(apiUrl, {
                   method: "POST",

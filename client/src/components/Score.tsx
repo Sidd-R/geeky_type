@@ -95,8 +95,10 @@ const Score: React.FC<Scoreprops> = ({ testData }) => {
       <div className="w-[300px] h-[200px] lg:w-[900px] lg:h-[400px]">
         <Line data={chartData} options={chartOptions} />
       </div>
-      <button onClick={handlePrevClick}>Previous 5 Tests</button>
-      <button onClick={handleNextClick}>Next 5 Tests</button>
+      <div className=" flex justify-between text-bg sm:ml-6 gap-y-4 mt-7 ">
+      <button onClick={handlePrevClick} className="bg-gray-200 p-1.5 bg-opacity-60 rounded-lg shadow-md">Previous 5 Tests</button>
+      <button onClick={handleNextClick} className="bg-gray-200 p-1.5 bg-opacity-60 rounded-lg shadow-md">Next 5 Tests</button>
+      </div>
     </>
   );
 };

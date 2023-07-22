@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import Test from "../models/testModel";
+const Test = require("../models/testModel");
 const User = require("../models/userModel");
 
 const getAllTests = asyncHandler(async (req, res) => {
