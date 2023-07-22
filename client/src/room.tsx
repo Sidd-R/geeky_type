@@ -13,7 +13,7 @@ import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
 import {useReducer,useContext,createContext,useEffect} from 'react';
 import { RoomContextValues,Action, RoomState,ProviderState, RoomAction, PreferenceState, Player } from '@/types';
-const PreferenceContext = createContext({} as ProviderState);
+// const PreferenceContext = createContext({} as ProviderState);
 
 const reducer = (state: RoomState, action: RoomAction): RoomState => {
   switch (action.type) {
