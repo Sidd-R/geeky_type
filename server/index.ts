@@ -12,6 +12,7 @@ import errorHandler from './middleware/errorMiddleware'
 import {userRoutes} from './routes/userRoutes'
 import {testRoutes} from './routes/testRoutes'
 import connectDB from "./config/db";
+import helmet from 'helmet'
 
 dotenv.config();
 
@@ -20,25 +21,38 @@ const PORT = process.env.PORT || 8080;
 connectDB();
 
 const app: Express = express();
-const serverHttp = http.createServer(app);
 
 const allowedOrigins = [
-    // "http://localhost:3000",
+    // "'self'",
     "https://geeky-type.vercel.app/",
     "https://geeky-type-git-master-sidd-r.vercel.app/",
     "https://geeky-type-5pshpnone-sidd-r.vercel.app/"
   ]
 
-app.use(cors({
-  origin: (origin, callback) => {
-    // Check if the origin is in the allowedOrigins array
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-}));
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     // Check if the origin is in the allowedOrigins array
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   methods: ['GET','POST']
+// }));
+
+// app.use(helmet())
+app.use(helmet.contentSecurityPolicy(
+  {
+    useDefaults: true,
+    directives: {
+      "script-src": allowedOrigins,
+      "style-src": null,
+    },
+  }
+))
+
+const serverHttp = http.createServer(app);
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
@@ -70,16 +84,19 @@ export const playerRooms: PlayerState = {};
 export const rooms: RoomState = {};
 const ROOM_SIZE = 3;
 
-const io = new Server(serverHttp,{cors: {
-  origin: (origin, callback) => {
-    // Check if the origin is in the allowedOrigins array
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-}})  
+const io = new Server(serverHttp,{cors: {origin:"*"}
+//   {
+//   origin: (origin, callback) => {
+//     // Check if the origin is in the allowedOrigins array
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   methods: ["GET", "POST"],
+// }
+})  
 
 // io.on("connection", (socket:Socket) => {
 //   console.log("Hwllo");
