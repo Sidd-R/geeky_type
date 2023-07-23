@@ -22,14 +22,24 @@ connectDB();
 const app: Express = express();
 const serverHttp = http.createServer(app);
 
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
+const allowedOrigins = [
+    // "http://localhost:3000",
     "https://geeky-type.vercel.app/",
     "https://geeky-type-git-master-sidd-r.vercel.app/",
     "https://geeky-type-5pshpnone-sidd-r.vercel.app/"
   ]
-}))
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Check if the origin is in the allowedOrigins array
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+}));
+
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use("/api/user",userRoutes)
@@ -61,12 +71,14 @@ export const rooms: RoomState = {};
 const ROOM_SIZE = 3;
 
 const io = new Server(serverHttp,{cors: {
-  origin: [
-    "http://localhost:3000",
-    "https://geeky-type.vercel.app/",
-    "https://geeky-type-git-master-sidd-r.vercel.app/",
-    "https://geeky-type-5pshpnone-sidd-r.vercel.app/"
-  ]
+  origin: (origin, callback) => {
+    // Check if the origin is in the allowedOrigins array
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
 }})  
 
 // io.on("connection", (socket:Socket) => {
