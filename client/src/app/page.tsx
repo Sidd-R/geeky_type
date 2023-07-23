@@ -1,34 +1,26 @@
 "use client";
 import { useRouter } from "next/navigation";
 import * as React from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { IoMdPerson } from "react-icons/io";
 import { RiTeamFill } from "react-icons/ri";
 import Image from "next/image";
 import Button from "@/components/Button/Button";
-// import ChatBox from '@/components/Chat/ChatBox';
-import Input from "@/components/Input";
-// import Kbd from "@/components/Kbd";
 import AnimateFade from "@/components/Layout/AnimateFade";
 // import Seo from '@/components/Seo';
 import { useState, useEffect } from "react";
 
-import { useRoomContext } from "@/room";
-import url from "@/url";
-
 export default function HomePage() {
   const router = useRouter();
-  type TESTUARRAY =  Array<{
-      userName:string,
-      userEmail:string,
-      testNo:string,
-      score:string
-    }>
+  type TESTUARRAY = Array<{
+    userName: string;
+    userEmail: string;
+    testNo: string;
+    score: string;
+  }>;
   type LEADERBOARD = {
-    avgScore:number,
-    noOfTests:number,
-    testsWithUserName: TESTUARRAY
-  }
+    avgScore: number;
+    noOfTests: number;
+    testsWithUserName: TESTUARRAY;
+  };
   const [leaderBoard, setLeaderBoard] = useState<LEADERBOARD>({
     avgScore: 0,
     noOfTests: 0,
@@ -36,7 +28,7 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    const apiUrl = url+"api/test/all";
+    const apiUrl = process.env.SERVER_URL + "api/test/all";
     fetch(apiUrl)
       .then((response) => {
         if (!response.ok) {
@@ -45,20 +37,9 @@ export default function HomePage() {
         return response.json();
       })
       .then((data) => {
-        let tempArr: TESTUARRAY = data.testsWithUserName
-        tempArr.sort((a,b) => parseInt(b.score)- parseInt(a.score))
+        let tempArr: TESTUARRAY = data.testsWithUserName;
+        tempArr.sort((a, b) => parseInt(b.score) - parseInt(a.score));
         setLeaderBoard(data);
-        // for (let i =0 ; i < leaderBoard.testsWithUserName.length-1 ; i++) {
-        //   for (let j = i + 1 ; j < leaderBoard.testsWithUserName.length ; j++) {
-        //     if (leaderBoard.testsWithUserName[j].score > leaderBoard.testsWithUserName[i].score) {
-        //       let temp = leaderBoard.testsWithUserName[j]
-        //       leaderBoard.testsWithUserName[j] = leaderBoard.testsWithUserName[i]
-        //       leaderBoard.testsWithUserName[i] = temp
-        //     } 
-        //   }
-        // }
-        // leaderBoard.testsWithUserName = leaderBoard.testsWithUserName.
-        console.log(leaderBoard);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -146,29 +127,29 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="max-w-sm my-5 p-5 rounded-md flex flex-row items-center prompt_card">
-              <Image
-                src="/assets/images/challenge.jpg"
-                alt=""
-                width={500}
-                height={500}
-                className="object-cover object-center md:w-48 w-40 h-40 rounded-md dark:bg-gray-500"
-              />
-              <div className="ml-6 flex flex-col items-center">
-                <div className="mt-6 mb-2">
-                  <h2 className="text-xl font-semibold tracki orange_gradient">
-                    Play Against friends
-                  </h2>
+                <Image
+                  src="/assets/images/challenge.jpg"
+                  alt=""
+                  width={500}
+                  height={500}
+                  className="object-cover object-center md:w-48 w-40 h-40 rounded-md dark:bg-gray-500"
+                />
+                <div className="ml-6 flex flex-col items-center">
+                  <div className="mt-6 mb-2">
+                    <h2 className="text-xl font-semibold tracki orange_gradient">
+                      Play Against friends
+                    </h2>
+                  </div>
+                  <Button
+                    onClick={() => router.push("/multiplayer")}
+                    className="flex items-center"
+                  >
+                    <RiTeamFill className="mr-1" />
+                    Multiplayer
+                  </Button>
                 </div>
-                <Button
-                  onClick={() => router.push("/multiplayer")}
-                  className="flex items-center"
-                >
-                  <RiTeamFill className="mr-1" />
-                  Multiplayer
-                </Button>
               </div>
             </div>
-          </div>
           </div>
           {leaderBoard.testsWithUserName &&
           leaderBoard.testsWithUserName.length > 0 ? (
@@ -195,30 +176,32 @@ export default function HomePage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {leaderBoard.testsWithUserName.map((data,i) => {
-                      if (i < 10)  return (
-                      <tr className="text-right border-b border-opacity-20 bg-gray-100 text-gray-800">
-                        <td className="px-3 py-2 text-left">
-                          <span className="text-gray-800">{i+1}</span>
-                        </td>
-                        <td className="px-3 py-2 text-left">
-                          <span className="text-gray-800">{data.userName}</span>
-                        </td>
-                        <td className="px-3 py-2">
-                          <span className="text-gray-800">
-                            {data.userEmail}
-                          </span>
-                        </td>
-                        <td className="px-3 py-2">
-                          <span className="text-gray-800">
-                            {data.score} WPM
-                          </span>
-                        </td>
-                      </tr>); 
-                      else return " " 
-                      }
-                    )
-                    }
+                    {leaderBoard.testsWithUserName.map((data, i) => {
+                      if (i < 10)
+                        return (
+                          <tr className="text-right border-b border-opacity-20 bg-gray-100 text-gray-800" key={i}>
+                            <td className="px-3 py-2 text-left">
+                              <span className="text-gray-800">{i + 1}</span>
+                            </td>
+                            <td className="px-3 py-2 text-left">
+                              <span className="text-gray-800">
+                                {data.userName}
+                              </span>
+                            </td>
+                            <td className="px-3 py-2">
+                              <span className="text-gray-800">
+                                {data.userEmail}
+                              </span>
+                            </td>
+                            <td className="px-3 py-2">
+                              <span className="text-gray-800">
+                                {data.score} WPM
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      else return <tr key={i}></tr>;
+                    })}
                   </tbody>
                 </table>
               </div>

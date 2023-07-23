@@ -13,7 +13,6 @@ import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
 import {useReducer,useContext,createContext,useEffect} from 'react';
 import { RoomContextValues,Action, RoomState,ProviderState, RoomAction, PreferenceState, Player } from '@/types';
-import url from './url';
 // const PreferenceContext = createContext({} as ProviderState);
 
 const reducer = (state: RoomState, action: RoomAction): RoomState => {
@@ -114,7 +113,7 @@ const reducer = (state: RoomState, action: RoomAction): RoomState => {
 
 
 const socket = io(
-  url+'public',
+  process.env.SERVER_URL+'public',
   {
     autoConnect: false,
   }

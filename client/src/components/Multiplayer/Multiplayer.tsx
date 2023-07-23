@@ -11,11 +11,6 @@ import Link from 'next/link';
 export default function Multiplayer() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const _ = require('lodash');
-
-  // const {
-  //   preferences: { isOpen },
-  // } = usePreferenceContext();
-
   const {
     room: {
       isPlaying,

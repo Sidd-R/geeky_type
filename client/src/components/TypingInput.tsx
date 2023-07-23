@@ -2,13 +2,10 @@
 
 import clsx from "clsx";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { BsCursorFill, BsFlagFill } from "react-icons/bs";
 import useTyping from "react-typing-game-hook";
 import Cookies from "js-cookie";
 import {toast} from "react-toastify";
-
 import { usePreferenceContext } from "@/context";
-import url from "@/url";
 
 type TypingInputProps = {
   text: string;
@@ -85,7 +82,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
               endTyping();
               const _id = Cookies.get("_id");
               if (_id) {
-                const apiUrl = url+"api/test/new";
+                const apiUrl = process.env.SERVER_URL+"api/test/new";
 
                 fetch(apiUrl, {
                   method: "POST",
@@ -115,7 +112,8 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                     });
                   })
                   .catch((error) => {
-                    // Handle API error here
+                    console.error(error);
+                    
                   });
               }
               return 0;
@@ -229,7 +227,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           <span
             className={clsx(
               "absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200",
-              { "text-fg opacity-100  text-gray-600": !isFocused }
+              { " opacity-100  text-gray-600": !isFocused }
             )}
           >
             Click to focus

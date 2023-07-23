@@ -8,27 +8,33 @@ import './Room'
 import { generateWords } from './generateWords'
 import { PlayerState, RoomState,Player } from './types'
 import { endGameHander, updateRoomHandler } from './publicRoomHandlers'
-// import {errorHandler} from './middleware/errorMiddleware.js'
+import errorHandler from './middleware/errorMiddleware'
 import {userRoutes} from './routes/userRoutes'
 import {testRoutes} from './routes/testRoutes'
 import connectDB from "./config/db";
 
-dotenv.config()
+dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
 connectDB();
 
-const app: Express = express()
+const app: Express = express();
 const serverHttp = http.createServer(app);
 
-app.use(cors())
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://geeky-type.vercel.app/",
+    "https://geeky-type-git-master-sidd-r.vercel.app/",
+    "https://geeky-type-5pshpnone-sidd-r.vercel.app/"
+  ]
+}))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use("/api/user",userRoutes)
 app.use("/api/test",testRoutes)
-
-// app.use(errorHandler)
+app.use(errorHandler)
 
 class Room{
   players: Array<Player> = []
@@ -52,9 +58,15 @@ class Room{
 
 export const playerRooms: PlayerState = {};
 export const rooms: RoomState = {};
+const ROOM_SIZE = 3;
 
 const io = new Server(serverHttp,{cors: {
-  origin: "*"
+  origin: [
+    "http://localhost:3000",
+    "https://geeky-type.vercel.app/",
+    "https://geeky-type-git-master-sidd-r.vercel.app/",
+    "https://geeky-type-5pshpnone-sidd-r.vercel.app/"
+  ]
 }})  
 
 // io.on("connection", (socket:Socket) => {
@@ -72,13 +84,12 @@ export var privateIO = io.of('/private')
 
 
 var onlineUserCount = 0;
-var playerInRoom = new Map<Player,Room>()
 var currentRoom:Array<Room> = [new Room(crypto.randomBytes(8).toString("hex"),generateWords("1").join(' '),"1"),new Room(crypto.randomBytes(8).toString("hex"),generateWords("2").join(' '),"2"),new Room(crypto.randomBytes(8).toString("hex"),generateWords("3").join(' '),"3")]
 
 
 publicIO.on('connection',(socket:Socket) => {
   onlineUserCount++
-  console.log("user joined with id: ",socket.id);
+  console.log("user joined with id:",socket.id);
   console.log("Online players: ",onlineUserCount);
   
   
@@ -101,12 +112,29 @@ publicIO.on('connection',(socket:Socket) => {
       inGame: false,
       winner: null,
     };
-    if (currentRoom[curRoomIndex].players.length >= 2) {
+
+    if (currentRoom[curRoomIndex].players.length >= 1) {
+      console.log("room",currentRoom[curRoomIndex].roomId,"timeout started");
+
+      setTimeout(()=> {
+        
+        if (currentRoom[curRoomIndex].players.length < ROOM_SIZE) {
+          console.log("Starting game for room",currentRoom[curRoomIndex].roomId,"without full players");
+          
+          publicIO.in(currentRoom[curRoomIndex].roomId).emit("start game");
+          currentRoom[curRoomIndex] = new Room(crypto.randomBytes(8).toString("hex"),generateWords(diff).join(' '),currentRoom[curRoomIndex].roomDif);
+        }
+      },25000)
+    }
+
+    if (currentRoom[curRoomIndex].players.length >= ROOM_SIZE) {
       sendWords([currentRoom[curRoomIndex].words,true,currentRoom[curRoomIndex].roomId,player.id]);
       rooms[currentRoom[curRoomIndex].roomId].inGame = true;
-      socket.in(currentRoom[curRoomIndex].roomId).emit("start game");
+      publicIO.in(currentRoom[curRoomIndex].roomId).emit("start game");
+      console.log("Starting game for room",currentRoom[curRoomIndex].roomId,"with full players");
+      
 
-      currentRoom[curRoomIndex].startTime = new Date().getTime();
+      // currentRoom[curRoomIndex].startTime = new Date().getTime();
       publicIO.in(currentRoom[curRoomIndex].roomId).emit("start game");
       currentRoom[curRoomIndex] = new Room(crypto.randomBytes(8).toString("hex"),generateWords(diff).join(' '),currentRoom[curRoomIndex].roomDif);
       
@@ -122,7 +150,11 @@ publicIO.on('connection',(socket:Socket) => {
   updateRoomHandler(socket)
   endGameHander(socket)
 
-  socket.on('disconnect',() => onlineUserCount--);
+  socket.on('disconnect',() => {
+    onlineUserCount--
+    console.log("user with id:",socket.id,"has left");
+    console.log("Online players: ",onlineUserCount);
+  });
 })
 
 privateIO.on('connection',(socket) => {

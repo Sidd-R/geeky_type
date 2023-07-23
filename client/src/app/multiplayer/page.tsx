@@ -93,8 +93,6 @@ export default function MultiplayerPage() {
               </div>
             </div>
             </div>
-              {/* <FormProvider {...methods}> */}
-                {/* <form onSubmit={onSubmit}> */}
                 <div className='flex items-center justify-center space-x-4 '>
                 <Button
                   onClick={joinRandomRoom}
@@ -102,7 +100,7 @@ export default function MultiplayerPage() {
                   className={`${isJoiningRoom && 'cursor-not-allowed'} mb-0 bg-orange-300`}
                 >
                   {isJoiningRoom ? (
-                    <span className='flex items-center text-bg bg-orange-300'>
+                    <span className='flex items-center text-bg bg-orange-300 hover:bg-orange-400'>
                       Joining
                       <CgSpinner className='ml-2 animate-spin' />
                     </span>

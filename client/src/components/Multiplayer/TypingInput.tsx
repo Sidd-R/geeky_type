@@ -98,7 +98,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
           top: 2,
         };
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currIndex, text.length]);
 
     //set WPM
@@ -114,7 +113,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     
     useEffect(() => {
-      console.log(typeof(text),text);
       if (isPlaying) {
         dispatch({type: 'SET_IS_PLAYING',payload:true})
         setValue('');
@@ -175,12 +173,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
     return (
       <>
         <div className='relative bottom-[5.5rem] flex w-full max-w-[950px] items-center justify-between'>
-          {/* <Code /> */}
-          {/* <ChatBox
-            isRoomChat
-            className='right-3 w-[calc(100%+2rem)] sm:right-2'
-            label='chat'
-          /> */}
         </div>
         <Players />
 
@@ -249,18 +241,6 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                   e.preventDefault();
               }}
             />
-            {/* <div
-              className={clsx(
-                'absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200',
-                { 'opacity-0': !isFocused }
-              )}
-            ></div>
-            <div
-              className={clsx(
-                'absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200',
-                { 'opacity-0': !isFocused }
-              )}
-            ></div> */}
 
             {isPlaying ? (
               <span

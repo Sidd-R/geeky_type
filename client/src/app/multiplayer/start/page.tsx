@@ -28,16 +28,9 @@ export default function MultiplayerStart() {
         dispatch({type: 'SET_ROOM_ID',payload:words[2]})
         dispatch({type:'SET_USER_ID',payload:words[3]})
         console.log(words);
-        if (words[1]) {
-          // dispatch({ type: 'SET_IS_PLAYING', payload: true });
-        }
+       
       }
       )
-      // socket.off('room update').on('room update', (players: Player[]) => {
-      //   console.log("got an update",players);
-        
-      //   dispatch({ type: 'SET_PLAYERS', payload: players });
-      // });
 
       socket.off('start game').on('start game', () => {
         dispatch({ type: 'SET_STATUS', payload: { progress: 0, wpm: 0 } });

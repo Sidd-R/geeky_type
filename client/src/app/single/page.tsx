@@ -5,10 +5,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { usePreferenceContext } from "@/context";
 import { useState,useEffect } from "react";
-// import Box from '@/components/Game/Box';
-// import Kbd from '@/components/Kbd';
-// import AnimateFade from '@/components/Layout/AnimateFade';
-// import Seo from '@/components/Seo';
 
 export default function SoloPage() {
   const difficultyOptions = ["1", "2", "3"];

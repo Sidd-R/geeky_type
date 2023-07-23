@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
-import url from "@/url";
 
 const AuthForm = () => {
 
@@ -26,7 +25,7 @@ const AuthForm = () => {
     console.log("Logging in with email:", email, "and password:", password);
   
     // Construct your API endpoint URL
-    const apiUrl = url+"api/user/login"; // Replace this with your actual API endpoint
+    const apiUrl = process.env.SERVER_URL+"api/user/login"; // Replace this with your actual API endpoint
   
     // Construct the request body (if needed)
     const requestBody = {
@@ -96,7 +95,7 @@ const AuthForm = () => {
     );
   
     // Construct your API endpoint URL
-    const apiUrl = url+"api/user"; // Replace this with your actual API endpoint
+    const apiUrl = process.env.SERVER_URL+"api/user"; // Replace this with your actual API endpoint
   
     // Construct the request body (if needed)
     const requestBody = {
