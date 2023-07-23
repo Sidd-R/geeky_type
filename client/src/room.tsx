@@ -113,7 +113,7 @@ const reducer = (state: RoomState, action: RoomAction): RoomState => {
 
 
 const socket = io(
-  process.env.SERVER_URL+'public',
+  process.env.NEXT_PUBLIC_SERVER_URL+'public',
   {
     autoConnect: false,
   }

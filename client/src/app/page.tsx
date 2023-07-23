@@ -28,7 +28,7 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    const apiUrl = process.env.SERVER_URL + "api/test/all";
+    const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL + "api/test/all";
     fetch(apiUrl)
       .then((response) => {
         if (!response.ok) {

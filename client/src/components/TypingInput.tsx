@@ -82,7 +82,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
               endTyping();
               const _id = Cookies.get("_id");
               if (_id) {
-                const apiUrl = process.env.SERVER_URL+"api/test/new";
+                const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL+"api/test/new";
 
                 fetch(apiUrl, {
                   method: "POST",

@@ -35,7 +35,7 @@ const UserProfile = () => {
     }
     const fetchData = async () => {
       const response = await fetch(
-        process.env.SERVER_URL+`api/user/me?id=` + _id
+        process.env.NEXT_PUBLIC_SERVER_URL+`api/user/me?id=` + _id
       );
       const data = await response.json();
 

@@ -25,7 +25,7 @@ const AuthForm = () => {
     console.log("Logging in with email:", email, "and password:", password);
   
     // Construct your API endpoint URL
-    const apiUrl = process.env.SERVER_URL+"api/user/login"; // Replace this with your actual API endpoint
+    const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL+"api/user/login"; // Replace this with your actual API endpoint
   
     // Construct the request body (if needed)
     const requestBody = {
@@ -95,7 +95,7 @@ const AuthForm = () => {
     );
   
     // Construct your API endpoint URL
-    const apiUrl = process.env.SERVER_URL+"api/user"; // Replace this with your actual API endpoint
+    const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL+"api/user"; // Replace this with your actual API endpoint
   
     // Construct the request body (if needed)
     const requestBody = {
