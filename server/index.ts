@@ -29,6 +29,8 @@ const allowedOrigins = [
     "https://geeky-type-5pshpnone-sidd-r.vercel.app/"
   ]
 
+
+  app.use(cors())
 // app.use(cors({
 //   origin: (origin, callback) => {
 //     // Check if the origin is in the allowedOrigins array
