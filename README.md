@@ -2,7 +2,7 @@
 <p align="center">
   
   <h3 align="center">GeekyType</h3>
-  <h2>Hosted at: <a href="https://typing-app-server.onrender.com/">https://typing-app-server.onrender.com/</a></h2>
+  <h2>Hosted <a href="https://geeky-type.vercel.app/">here</a></h2>
   <p align="center">
     A typing app to practice typing and compete with your friends
     <br/>
