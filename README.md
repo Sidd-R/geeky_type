@@ -40,7 +40,7 @@ To get a local copy up and running follow these simple example steps.
 1. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/geekytype.git
+git clone https://github.com/Sidd-R/typing_app.git
 cd typing_app
 cd client
 ```
@@ -69,11 +69,9 @@ Replace your_mongodb_connection_string with the connection string to your MongoD
 
 5. Start the development server for backend:
 ```bash
+new terminal:
 cd server
 npm run dev or yarn dev
-new terminal:
-cd server/backend
-npm run server or yarn server
 ```
 
 6. Start the development server for client:
